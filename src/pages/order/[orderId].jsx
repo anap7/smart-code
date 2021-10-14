@@ -1,21 +1,19 @@
 import Head from 'next/head'
 
-function Page({ qrcode }) {
+function Page({ orderId }) {
   return (
     <div>
-      <Head>
-        <h1>Olá na página qrcode: {qrcode}</h1>
-      </Head>
+        <h1>Olá esse é o pedido: {orderId}</h1>
     </div>
   )
 }
 
 export async function getServerSideProps(context) {
-  const qrCodeNumber = context.params.qrcode;
+  const orderId = context.params.orderId;
 
   return {
     props: {
-      qrcode: qrCodeNumber
+      orderId: orderId
     }
   }
 }

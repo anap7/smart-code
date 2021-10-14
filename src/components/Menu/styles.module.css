@@ -1,0 +1,26 @@
+.containerMenu {
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background: #fff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.title {
+  font-weight: bold;
+  color: #2D9BF0;
+  font-weight: bold;
+}
+
+.items {
+  padding: 0 1em;
+  font-weight: 400;
+  color: #2D9BF0;
+  cursor: pointer;
+}
+
+.items:hover {
+  text-decoration: underline;
+}

@@ -1,6 +1,6 @@
-<h1 align="center">Konsumo Web- MVP</h1>
+<h1 align="center">Smart Code - POC</h1>
 
-Finalizado para a primeira versão de testes.
+Uma POC simples para testarmos a performance da leitura e alteração de QRCode
 
 ## Iniciando :zap:
     git clone https://gitlab.com/techlab1/konsulta-web.git
