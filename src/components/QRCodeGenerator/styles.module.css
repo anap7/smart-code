@@ -2,4 +2,60 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  margin-top: 4em;
+}
+
+.title {
+  font-size: 1.2em;
+  font-weight: 500;
+  margin-bottom: 1em;
+  color: #444242;
+  width: 500px;
+  text-align: center;
+}
+
+.description {
+  font-size: 1.2em;
+  font-weight: 500;
+  margin-bottom: 1em;
+  color: #444242;
+}
+
+.description span {
+  color: #2D9BF0;
+}
+
+.button {
+  margin: 0 1em;
+  padding: 1em;
+  border: 1px solid #2D9BF0;
+  background-color: #2D9BF0;
+  color: #fff;
+  transition: 0.3s;
+  align-self: center;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+.buttonLast {
+  margin-bottom: 1em;
+}
+
+.buttonContent {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 600px)
+{
+  .title 
+   {
+    font-size: 1em;
+    width: 300px;
+   }
 }

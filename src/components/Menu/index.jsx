@@ -16,6 +16,11 @@ export default function Menu({ children }) {
               <span className={styles.items}>Gerar Novo QRCode</span>
             </a>
           </Link>
+          <Link href="/register">
+            <a title="AssociarQRCode">
+              <span className={styles.items}>Registrar QRCode</span>
+            </a>
+          </Link>
           <Link href="/update">
             <a title="AlterarQRCode">
               <span className={styles.items}>Alterar QRCode</span>
