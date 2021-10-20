@@ -10,30 +10,32 @@ export default function QRCodeGenerator() {
   const [src, setSrc] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  async function getRandomNumber() {
-    setIsLoading(true);
+  function getRandomNumber() {
     const orderNumber = (Math.floor(100000000 + Math.random() * 900000000)) * 2;
     const url = `${process.env.URL}/order/${orderNumber}`;
-  
-    QRCode.toDataURL(url).then((data) => {
+
+    QRCode.toDataURL(url).then(async (data) => {
+      setIsLoading(true);
+
+      const result = await fetch(`/api/insert-qrcode`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          QRCode: data,
+          codeNumber: orderNumber.toString(),
+          originalURL: url,
+          createdAt: new Date().toLocaleString()
+        })
+      })
+        .then(res => res.json());
+
       setSrc(data);
+      setIsLoading(false);
     });
 
-    const result = await fetch(`/api/insert-qrcode`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ 
-        QRCodeNumber: orderNumber.toString(), 
-        originalURL: url, 
-        createdAt: new Date().toLocaleString()
-      })
-    })
-      .then(res => res.json());
-    
     setRandomOrderNumber(orderNumber);
-    setIsLoading(false);
   }
 
   if (isLoading) return <Loader />
@@ -41,7 +43,7 @@ export default function QRCodeGenerator() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Clique no botão abaixo para gerar um QRCode aleatório com um novo número de pedido</h1>
-      <button onClick={getRandomNumber} className={styles.button}>Gerar QRCode</button>
+      <button onClick={getRandomNumber} className={styles.button}>Gerar QRCode {randomOrderNumber && 'novamente'}</button>
 
       {
         randomOrderNumber &&

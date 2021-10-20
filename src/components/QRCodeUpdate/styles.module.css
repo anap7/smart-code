@@ -1,7 +1,19 @@
-.container {
+.mainContent {
+  margin-top: 2em;
+  width: 100vw;
+  height: 70vh;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.formContent {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .label {
@@ -19,23 +31,92 @@
 
 .button {
   margin: 0 1em;
-  padding: .6em;
+  padding: .8em;
   border: 1px solid #2D9BF0;
   background-color: #2D9BF0;
   color: #fff;
   transition: 0.3s;
   align-self: center;
-  width: 200px;
+  
 }
 
 .button:hover {
   opacity: 0.8;
 }
 
-@media (max-width: 600px)
+.warning {
+  background-color: tomato;
+  opacity: 0.8;
+  color: #fff;
+  padding: .5em;
+  border-radius: .5em;
+  margin-top: 1em;
+  text-align: center;
+  width: 400px;
+}
+
+.sucess{
+  background-color: rgb(100, 182, 89);
+  opacity: 0.8;
+  color: #fff;
+  padding: .5em;
+  border-radius: .5em;
+  margin-top: 1em;
+  text-align: center;
+  width: 400px;
+}
+
+.qrcodeResultContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4em;
+}
+
+.title {
+  font-size: 1.2em;
+  font-weight: 500;
+  color: #444242;
+  width: 400px;
+  text-align: center;
+}
+
+.mainTitle {
+  margin: 1em 0;
+  font-size: 1.5em;
+  font-weight: 500;
+  color: #2D9BF0;
+}
+
+.description {
+  font-size: 1.2em;
+  font-weight: 500;
+  margin-bottom: 1em;
+  color: #444242;
+}
+
+.description span {
+  color: #2D9BF0;
+}
+
+@media (max-width: 943px)
 {
-  .label 
-   {
-    width: 450px;
+  .label, .warning, .sucess{
+    width: 300px;
+    padding: .2em;
+   }
+
+   .qrcodeResultContent {
+    margin-left: 0em;
+    margin-top: 2em;
+   }
+
+   .buttonLast {
+     margin-bottom: 1em;
+   }
+
+   .description {
+     width: 300px;
    }
 }

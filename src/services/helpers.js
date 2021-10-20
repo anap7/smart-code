@@ -22,15 +22,39 @@ function isNumeric(str) {
   return (er.test(str));
 }
 
-export async function register(data, setStatus) {
+export async function register(data, setStatus, setSrc, setRandomOrderNumber) {
 
-  if (!isNumeric(data.QRNumber) || !isNumeric(data.orderNumber)) {
+  const qrCodeValue = data.qrCodeValue;
+  let type = '';
+
+  if (qrCodeValue.includes('http', 'https')) {
+    type = 'url';
+  } else {
+    type = 'number';
+    if (!isNumeric(qrCodeValue)) {
+      setStatus((prevState) => ({
+        ...prevState,
+        isThereError: true,
+        wasSucess: false,
+        description: "O número do QRCode é um valor inválido."
+      }));
+
+      setSrc('');
+      setRandomOrderNumber(null);
+      return false;
+    }
+  }
+
+  if (!isNumeric(data.orderNumber)) {
     setStatus((prevState) => ({
       ...prevState,
       isThereError: true,
       wasSucess: false,
-      description: "O número do QRCode ou o novo número do pedido é um valor inválido."
+      description: "O número do pedido é um valor inválido."
     }));
+
+    setSrc('');
+    setRandomOrderNumber(null);
 
     return false;
   }
@@ -40,7 +64,7 @@ export async function register(data, setStatus) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify({submitValues: data, type})
   })
     .then(res => res.json());
 
@@ -52,8 +76,12 @@ export async function register(data, setStatus) {
       description: result?.error ? result.error : "Ocorreu algum problema ao registrar o novo pedido."
     }));
 
+    setSrc('');
+    setRandomOrderNumber(null);
+
     return false;
-  } 
+  }
+
 
   setStatus((prevState) => ({
     ...prevState,
@@ -61,6 +89,9 @@ export async function register(data, setStatus) {
     wasSucess: true,
     description: "Seu pedido foi registrado com sucesso!"
   }));
+
+  setSrc(result.QRCode);
+  setRandomOrderNumber(result.newOrderNumber);
 
   return true;
 

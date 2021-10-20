@@ -1,27 +1,49 @@
-import { getQRCode, saveOrder, getOrder} from '../../services/database';
+import { getQRCode, saveOrder, getOrder } from '../../services/database';
+import QRCode from 'qrcode';
 
 export default async function handler(req, res) {
 
   const data = req.body;
+  let searchObj = {};
 
-  const resultQRCodeVerification = await getQRCode(data?.QRNumber);
-  const resultOrderNumberVerification = await getOrder(data?.orderNumber);
+  if (data.type === "url") {
+    searchObj = { originalURL: data?.submitValues?.qrCodeValue }
+  } else {
+    searchObj = { codeNumber: data?.submitValues?.qrCodeValue }
+  }
 
-  if(!resultQRCodeVerification || resultQRCodeVerification.error || !resultQRCodeVerification?.QRCodeNumber){
-    return res.status(404).json({error: 'QRCode não encontrado na base de dados. Por favor, gerar um novo QRCode ou tente novamente.'});
-  } 
+  const resultQRCodeVerification = await getQRCode(searchObj);
+  const resultOrderNumberVerification = await getOrder(data?.submitValues?.orderNumber);
 
-  if(resultOrderNumberVerification?.orderNumber){
-    return res.status(406).json({error: 'Parece que esse número de pedido já está registrado no banco, por favor, inserir um valor válido.'});
-  } 
+  if (!resultQRCodeVerification || resultQRCodeVerification.error || (!resultQRCodeVerification?.QRCode && !resultQRCodeVerification?.codeNumber)) {
+    return res.status(404).json({ error: 'QRCode não encontrado na base de dados. Por favor, gerar um novo QRCode ou tente novamente.' });
+  }
 
-  const newObj = {...data, originalURL: resultQRCodeVerification.originalURL};
+  if (resultOrderNumberVerification?.orderNumber) {
+    return res.status(406).json({ error: 'Parece que esse número de pedido já está registrado no banco, por favor, inserir um valor válido.' });
+  }
+
+  const url = `${process.env.URL}/order/${data?.submitValues?.orderNumber}`;
+  const qrcode = await QRCode.toDataURL(url).then(data => data);
+
+  delete data.submitValues.qrCodeValue;
+
+  const newObj = {
+    ...data.submitValues,
+    originalURL: resultQRCodeVerification.originalURL,
+    originalQRCode: resultQRCodeVerification.QRCode,
+    originalURL: resultQRCodeVerification.originalURL,
+    originalCodeNumber: resultQRCodeVerification.codeNumber,
+    QRCode: qrcode,
+    url,
+    createdAt: new Date().toLocaleString()
+  };
 
   const resultOnRegisterOrder = await saveOrder(newObj);
 
-  if (!resultOnRegisterOrder || resultOnRegisterOrder.error) {
-    return res.status(400).json({error: 'Ocorreu um problema ao registrar o novo pedido.'});
+  if (!resultOnRegisterOrder || resultOnRegisterOrder.error || !qrcode.includes("data:image")) {
+    return res.status(400).json({ error: 'Ocorreu um problema ao registrar o novo pedido.' });
   }
 
-  return res.status(200).json({sucess: "Seu pedido foi registrado com sucesso!"});
+  return res.status(200).json({ sucess: "Seu pedido foi registrado com sucesso!", QRCode: qrcode, newOrderNumber: data?.submitValues?.orderNumber });
 }

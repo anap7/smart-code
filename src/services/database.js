@@ -16,16 +16,16 @@ export async function saveQRCode(data) {
   }
 }
 
-export async function getQRCode(qrcode) {
+export async function getQRCode(searchObj) {
   try {
     const db = await connectToDatabase();
 
     const collection = db.collection('qrcode');
 
     const result = await collection.findOne(
-      { QRCodeNumber: qrcode }
+      searchObj
     );
-
+    
     return result;
 
   } catch (error) {
