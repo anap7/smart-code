@@ -5,6 +5,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.buttonContent}>
+        <h1>{`${process.env.URL}`}</h1>
         <Link href="/generator">
           <a title="gerar-novo-qrcode">
             <button className={`${styles.button} ${styles.generatorButton}`}>
