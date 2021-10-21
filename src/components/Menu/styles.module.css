@@ -24,3 +24,17 @@
 .items:hover {
   text-decoration: underline;
 }
+
+
+@media (max-width: 535px)
+{
+  .contentItems {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    margin-top: .5em;
+  }
+}
+
+

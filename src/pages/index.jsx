@@ -16,7 +16,7 @@ export default function Home() {
         <Link href="/register">
           <a title="registrar-qrcode">
             <button className={styles.button}>
-              Associar QRCode a um pedido
+              Associar Pedido
             </button>
           </a>
         </Link>
@@ -24,7 +24,7 @@ export default function Home() {
         <Link href="/update">
           <a title="alterar-qrcode">
             <button className={styles.button}>
-              Alterar o código do QRCode
+              Alterar Pedido
             </button>
           </a>
         </Link>

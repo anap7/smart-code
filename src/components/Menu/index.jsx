@@ -13,17 +13,17 @@ export default function Menu({ children }) {
         <div className={styles.contentItems}>
           <Link href="/generator">
             <a title="GerarQRCode">
-              <span className={styles.items}>Gerar Novo QRCode</span>
+              <span className={styles.items}>Gerar novo QRCode</span>
             </a>
           </Link>
           <Link href="/register">
             <a title="AssociarQRCode">
-              <span className={styles.items}>Registrar QRCode</span>
+              <span className={styles.items}>Associar Pedido</span>
             </a>
           </Link>
           <Link href="/update">
             <a title="AlterarQRCode">
-              <span className={styles.items}>Alterar QRCode</span>
+              <span className={styles.items}>Alterar Pedido</span>
             </a>
           </Link>
         </div>
