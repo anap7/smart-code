@@ -96,3 +96,78 @@ export async function register(data, setStatus, setSrc, setRandomOrderNumber) {
   return true;
 
 }
+
+export async function update(data, setStatus, setSrc, setRandomOrderNumber) {
+
+  const inputValue = data.inputValue;
+  let type = '';
+
+  if (inputValue.includes('http', 'https')) {
+    type = 'url';
+  } else {
+    type = 'number';
+    if (!isNumeric(inputValue)) {
+      setStatus((prevState) => ({
+        ...prevState,
+        isThereError: true,
+        wasSucess: false,
+        description: "O número de verificação é um valor inválido."
+      }));
+
+      setSrc('');
+      setRandomOrderNumber(null);
+      return false;
+    }
+  }
+
+  if (!isNumeric(data.orderNumber)) {
+    setStatus((prevState) => ({
+      ...prevState,
+      isThereError: true,
+      wasSucess: false,
+      description: "O número do pedido é um valor inválido."
+    }));
+
+    setSrc('');
+    setRandomOrderNumber(null);
+
+    return false;
+  }
+
+  const result = await fetch(`/api/update-order`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({submitValues: data, type})
+  })
+    .then(res => res.json());
+
+  if (result.error || !result) {
+    setStatus((prevState) => ({
+      ...prevState,
+      isThereError: true,
+      wasSucess: false,
+      description: result?.error ? result.error : "Ocorreu algum problema ao registrar o novo pedido."
+    }));
+
+    setSrc('');
+    setRandomOrderNumber(null);
+
+    return false;
+  }
+
+
+  setStatus((prevState) => ({
+    ...prevState,
+    isThereError: false,
+    wasSucess: true,
+    description: "Seu pedido foi registrado com sucesso!"
+  }));
+
+  setSrc(result.QRCode);
+  setRandomOrderNumber(result.newOrderNumber);
+
+  return true;
+
+}

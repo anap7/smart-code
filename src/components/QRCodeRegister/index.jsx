@@ -47,7 +47,7 @@ export default function QRCodeRegister() {
           <input className={styles.input} type="text" placeholder="Número do QRCode ou URL" name="QRNumber" required />
 
           <label className={styles.label}>Insira o novo número do pedido</label>
-          <input className={styles.input} type="text" placeholder="Número novo do pedido" name="newOrderNumber" required />
+          <input className={styles.input} type="text" placeholder="Número novo do pedido" name="newOrderNumber" maxLength="12" required />
 
           <label className={styles.label}>Insira o horário desse pedido</label>
           <input className={styles.input} type="datetime-local" name="date" required />

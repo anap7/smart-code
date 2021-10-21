@@ -1,7 +1,8 @@
 import styles from './styles.module.css';
-import { returnDateTime, register } from '../../services/helpers';
+import { returnDateTime, update } from '../../services/helpers';
 import { useState } from 'react';
 import Loader from '../Loader';
+import Link from 'next/link';
 
 export default function QRCodeUpdate() {
   const [status, setStatus] = useState({
@@ -17,7 +18,21 @@ export default function QRCodeUpdate() {
     e.preventDefault();
     setIsLoading(true);
 
+    const inputValue = e.target.QRNumber.value.trim();
+    const orderNumber = e.target.newOrderNumber.value.trim();
+    const date = returnDateTime(e.target.date.value);
+
+    const obj = {
+      inputValue,
+      orderNumber,
+      ...date,
+    }
+
+    await update(obj, setStatus, setSrc, setRandomOrderNumber);
+
     setIsLoading(false);
+
+    return false;
   }
 
   if (isLoading) return <Loader />
@@ -28,15 +43,15 @@ export default function QRCodeUpdate() {
         <div className={styles.formContent}>
           <h1 className={styles.mainTitle}>Atualizando pedido</h1>
           <label className={styles.label}>Insira o número do pedido gerado, número do QRCode ou URL fornecida</label>
-          <input className={styles.input} type="text" placeholder="Número do QRCode, URL ou número do pedido" name="QRNumber" required />
+          <input className={styles.input} type="text" placeholder="QRCode, URL ou número do pedido" name="QRNumber" required />
 
           <label className={styles.label}>Insira o novo número do pedido</label>
-          <input className={styles.input} type="text" required placeholder="Número novo do pedido" name="newOrderNumber" required />
+          <input className={styles.input} type="text" required placeholder="Número novo do pedido" name="newOrderNumber" maxLength="12" required />
 
           <label className={styles.label}>Insira a data e o horário do pedido registrado</label>
           <input className={styles.input} type="datetime-local" name="date" required />
 
-          <button className={styles.button}>Alterar Pedido</button>
+          <button className={styles.button} type="submit">Alterar Pedido</button>
 
           {
             status.isThereError &&
