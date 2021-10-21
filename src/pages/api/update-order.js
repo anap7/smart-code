@@ -64,6 +64,7 @@ export default async function handler(req, res) {
   const qrcode = await QRCode.toDataURL(url).then(data => data);
 
   const newObj = {
+    orderNumber: data?.submitValues?.orderNumber,
     QRCode: qrcode,
     url,
     updateddAt: new Date().toLocaleString()
