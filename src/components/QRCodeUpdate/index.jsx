@@ -20,12 +20,10 @@ export default function QRCodeUpdate() {
 
     const inputValue = e.target.QRNumber.value.trim();
     const orderNumber = e.target.newOrderNumber.value.trim();
-    const date = returnDateTime(e.target.date.value);
 
     const obj = {
       inputValue,
-      orderNumber,
-      ...date,
+      orderNumber
     }
 
     await update(obj, setStatus, setSrc, setRandomOrderNumber);
@@ -44,9 +42,6 @@ export default function QRCodeUpdate() {
           <h1 className={styles.mainTitle}>Alterar Pedido</h1>
           <label className={styles.label}>Insira o número do pedido, número do QRCode ou URL gerada</label>
           <input className={styles.input} type="text" placeholder="QRCode, URL ou número do pedido" name="QRNumber" required />
-
-          <label className={styles.label}>Insira a data e o horário do pedido registrado</label>
-          <input className={styles.input} type="datetime-local" name="date" required />
 
           <label className={styles.label}>Insira o novo número do pedido</label>
           <input className={styles.input} type="text" required placeholder="Número novo do pedido" name="newOrderNumber" maxLength="12" required />

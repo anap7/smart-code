@@ -5,7 +5,6 @@ export default async function handler(req, res) {
 
   const data = req.body;
 
-  const completedDate = data?.submitValues?.completedDate;
   let searchObjCodeNumber = {};
   let searchObjOrderNumber = {};
   let searchObjUrl = {};
@@ -21,9 +20,9 @@ export default async function handler(req, res) {
 
   const resultOrderNumberVerification = await getOrder(data?.submitValues?.orderNumber);
 
-  const resultByURLVerification = await getOrderDataByURL(searchObjUrl, completedDate);
-  const resultByCodeNumberVerification = await getOrderDataByCodeNumber(searchObjCodeNumber, completedDate);
-  const resultByOrderNumberVerification = await getOrderDataByOrderNumber(searchObjOrderNumber, completedDate);
+  const resultByURLVerification = await getOrderDataByURL(searchObjUrl);
+  const resultByCodeNumberVerification = await getOrderDataByCodeNumber(searchObjCodeNumber);
+  const resultByOrderNumberVerification = await getOrderDataByOrderNumber(searchObjOrderNumber);
 
   ("RESULTADO NA API");
   console.log("URL");
@@ -45,15 +44,15 @@ export default async function handler(req, res) {
 
   if (resultByURLVerification?._id) {
     id = resultByURLVerification?._id.toString();
-    originalQRCode = resultByURLVerification?.originalQRCode;
+    originalQRCode = resultByURLVerification?.QRCode;
 
   } else if (resultByCodeNumberVerification?._id) {
     id = resultByCodeNumberVerification?._id.toString();
-    originalQRCode = resultByCodeNumberVerification?.originalQRCode;
+    originalQRCode = resultByCodeNumberVerification?.QRCode;
 
   } else if (resultByOrderNumberVerification?._id) {
     id = resultByOrderNumberVerification?._id.toString();
-    originalQRCode = resultByOrderNumberVerification?.originalQRCode;
+    originalQRCode = resultByOrderNumberVerification?.QRCode;
 
   }
 

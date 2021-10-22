@@ -21,12 +21,10 @@ export default function QRCodeRegister() {
 
     const qrCodeValue = e.target.QRNumber.value.trim();
     const orderNumber = e.target.newOrderNumber.value.trim();
-    const date = returnDateTime(e.target.date.value);
 
     const obj = {
       qrCodeValue,
-      orderNumber,
-      ...date,
+      orderNumber
     }
 
     await register(obj, setStatus, setSrc, setRandomOrderNumber);
@@ -48,9 +46,6 @@ export default function QRCodeRegister() {
 
           <label className={styles.label}>Insira o novo número do pedido</label>
           <input className={styles.input} type="text" placeholder="Número novo do pedido" name="newOrderNumber" maxLength="12" required />
-
-          <label className={styles.label}>Insira o novo horário desse pedido</label>
-          <input className={styles.input} type="datetime-local" name="date" required />
 
           <button className={styles.button}>Registrar novo pedido</button>
 
