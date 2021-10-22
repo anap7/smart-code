@@ -1,5 +1,4 @@
 import { getOrder, getOrderDataByURL, getOrderDataByCodeNumber, getOrderDataByOrderNumber, updateOrder } from '../../services/database';
-import QRCode from 'qrcode';
 const ObjectId = require('mongodb').ObjectId;
 
 export default async function handler(req, res) {
@@ -13,6 +12,7 @@ export default async function handler(req, res) {
   let searchObjOrderNumber = {};
   let searchObjUrl = {};
   let id = "";
+  let originalQRCode = "";
   
   if (data.type === "url") {
     searchObjUrl = { url: data?.submitValues?.inputValue };
@@ -49,23 +49,32 @@ export default async function handler(req, res) {
 
   if (resultByURLVerification?._id) {
     id = resultByURLVerification?._id.toString();
+    originalQRCode = resultByURLVerification?.originalQRCode;
+    console.log("resultado url");
+    console.log(resultByURLVerification);
 
   } else if (resultByCodeNumberVerification?._id) {
-    id = resultByCodeNumberVerification?._id.toString()
+    id = resultByCodeNumberVerification?._id.toString();
+    originalQRCode = resultByCodeNumberVerification?.originalQRCode;
+    console.log("resultado code number");
+    console.log(resultByCodeNumberVerification);
 
   } else if (resultByOrderNumberVerification?._id) {
-    id = resultByOrderNumberVerification?._id.toString()
+    id = resultByOrderNumberVerification?._id.toString();
+    originalQRCode = resultByOrderNumberVerification?.originalQRCode;
+    console.log("resultado order number");
+    console.log(resultByOrderNumberVerification);
   }
 
   console.log("\n ID GERADO");
   console.log(id);
+  console.log("\n QRCode Gerado");
+  console.log(originalQRCode);
 
   const url = `${process.env.URL}/order/${data?.submitValues?.orderNumber}`;
-  const qrcode = await QRCode.toDataURL(url).then(data => data);
 
   const newObj = {
     orderNumber: data?.submitValues?.orderNumber,
-    QRCode: qrcode,
     url,
     updateddAt: new Date().toLocaleString()
   };
@@ -77,6 +86,6 @@ export default async function handler(req, res) {
   }
 
   if(updateResult?.lastErrorObject?.n > 0) {
-    return res.status(200).json({ sucess: 'Pedido atualizado com sucesso!', QRCode: qrcode, newOrderNumber: data?.submitValues?.orderNumber });
+    return res.status(200).json({ sucess: 'Pedido atualizado com sucesso!', originalQRCode: originalQRCode, newOrderNumber: data?.submitValues?.orderNumber });
   }
 }

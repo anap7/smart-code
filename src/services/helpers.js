@@ -82,7 +82,6 @@ export async function register(data, setStatus, setSrc, setRandomOrderNumber) {
     return false;
   }
 
-
   setStatus((prevState) => ({
     ...prevState,
     isThereError: false,
@@ -90,7 +89,7 @@ export async function register(data, setStatus, setSrc, setRandomOrderNumber) {
     description: "Seu pedido foi registrado com sucesso!"
   }));
 
-  setSrc(result.QRCode);
+  setSrc(result.originalQRCode);
   setRandomOrderNumber(result.newOrderNumber);
 
   return true;
@@ -165,7 +164,7 @@ export async function update(data, setStatus, setSrc, setRandomOrderNumber) {
     description: "Seu pedido foi registrado com sucesso!"
   }));
 
-  setSrc(result.QRCode);
+  setSrc(result.originalQRCode);
   setRandomOrderNumber(result.newOrderNumber);
 
   return true;

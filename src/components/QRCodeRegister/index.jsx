@@ -42,7 +42,7 @@ export default function QRCodeRegister() {
     <div className={styles.mainContent}>
       <form onSubmit={handleSubmit}>
         <div className={styles.formContent}>
-          <h1 className={styles.mainTitle}>Registrando novo pedido</h1>
+          <h1 className={styles.mainTitle}>Associar Pedido</h1>
           <label className={styles.label}>Insira o número do QRCode gerado ou da URL fornecida no QRCode</label>
           <input className={styles.input} type="text" placeholder="Número do QRCode ou URL" name="QRNumber" required />
 
@@ -69,11 +69,11 @@ export default function QRCodeRegister() {
       {
         randomOrderNumber &&
         <div className={styles.qrcodeResultContent}>
-          <h1 className={styles.title} >Novo QRCode registrado!</h1>
+          <h1 className={styles.title} >Pedido associado no QRCode</h1>
 
           <img src={src} alt="QRCode" width={250} height={250} />
 
-          <p className={styles.description}>Número do QRCode gerado: <span>{randomOrderNumber}</span></p>
+          <p className={styles.description}>Novo número de pedido associado: <span>{randomOrderNumber}</span></p>
 
           <div className={styles.buttonContent}>
             <Link href={`${process.env.URL}/order/${randomOrderNumber}`}>

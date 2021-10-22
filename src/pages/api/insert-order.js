@@ -1,5 +1,4 @@
 import { getQRCode, saveOrder, getOrder } from '../../services/database';
-import QRCode from 'qrcode';
 
 export default async function handler(req, res) {
 
@@ -24,26 +23,23 @@ export default async function handler(req, res) {
   }
 
   const url = `${process.env.URL}/order/${data?.submitValues?.orderNumber}`;
-  const qrcode = await QRCode.toDataURL(url).then(data => data);
 
   delete data.submitValues.qrCodeValue;
 
   const newObj = {
     ...data.submitValues,
-    originalURL: resultQRCodeVerification.originalURL,
     originalQRCode: resultQRCodeVerification.QRCode,
     originalURL: resultQRCodeVerification.originalURL,
     originalCodeNumber: resultQRCodeVerification.codeNumber,
-    QRCode: qrcode,
     url,
     createdAt: new Date().toLocaleString()
   };
 
   const resultOnRegisterOrder = await saveOrder(newObj);
 
-  if (!resultOnRegisterOrder || resultOnRegisterOrder.error || !qrcode.includes("data:image")) {
+  if (!resultOnRegisterOrder || resultOnRegisterOrder.error || !resultQRCodeVerification?.QRCode) {
     return res.status(400).json({ error: 'Ocorreu um problema ao registrar o novo pedido.' });
   }
 
-  return res.status(200).json({ sucess: "Seu pedido foi registrado com sucesso!", QRCode: qrcode, newOrderNumber: data?.submitValues?.orderNumber });
+  return res.status(200).json({ sucess: "Seu pedido foi registrado com sucesso!", originalQRCode: resultQRCodeVerification?.QRCode, newOrderNumber: data?.submitValues?.orderNumber });
 }

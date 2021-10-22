@@ -41,15 +41,15 @@ export default function QRCodeUpdate() {
     <div className={styles.mainContent}>
       <form onSubmit={handleSubmit}>
         <div className={styles.formContent}>
-          <h1 className={styles.mainTitle}>Atualizando pedido</h1>
+          <h1 className={styles.mainTitle}>Alterar Pedido</h1>
           <label className={styles.label}>Insira o número do pedido gerado, número do QRCode ou URL fornecida</label>
           <input className={styles.input} type="text" placeholder="QRCode, URL ou número do pedido" name="QRNumber" required />
 
-          <label className={styles.label}>Insira o novo número do pedido</label>
-          <input className={styles.input} type="text" required placeholder="Número novo do pedido" name="newOrderNumber" maxLength="12" required />
-
           <label className={styles.label}>Insira a data e o horário do pedido registrado</label>
           <input className={styles.input} type="datetime-local" name="date" required />
+
+          <label className={styles.label}>Insira o novo número do pedido</label>
+          <input className={styles.input} type="text" required placeholder="Número novo do pedido" name="newOrderNumber" maxLength="12" required />
 
           <button className={styles.button} type="submit">Alterar Pedido</button>
 
@@ -68,11 +68,11 @@ export default function QRCodeUpdate() {
       {
         randomOrderNumber &&
         <div className={styles.qrcodeResultContent}>
-          <h2 className={styles.title} >Novo QRCode registrado!</h2>
+          <h2 className={styles.title}>Pedido substituido no QRCode</h2>
 
           <img src={src} alt="QRCode" width={250} height={250} />
 
-          <p className={styles.description}>Número do QRCode gerado: <span>{randomOrderNumber}</span></p>
+          <p className={styles.description}>Novo número do pedido substituido: <span>{randomOrderNumber}</span></p>
 
           <div className={styles.buttonContent}>
             <Link href={`${process.env.URL}/order/${randomOrderNumber}`}>
