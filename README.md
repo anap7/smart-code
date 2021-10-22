@@ -2,7 +2,7 @@
 
 **Sobre** - Smart code é uma POC com o intuito de validar se é possível associar um QRCode a um pedido.
 
-**Versão** - Registro e verificação através da data, número do pedido ou QRCode (número do QRCode ou URL)
+**Versão** - Registro e verificação através do número do pedido ou QRCode ÚNICO (número do QRCode ou URL)
 
 ## Iniciando :zap:
     git clone https://gitlab.com/techlab1/smart-code.git
