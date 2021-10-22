@@ -91,7 +91,7 @@
 }
 
 .description {
-  font-size: 1.2em;
+  font-size: 1.1em;
   font-weight: 500;
   margin-bottom: 1em;
   color: #444242;
@@ -101,7 +101,7 @@
   color: #2D9BF0;
 }
 
-@media (max-width: 943px)
+@media (max-width: 900px)
 {
   .label, .warning, .sucess{
     width: 300px;

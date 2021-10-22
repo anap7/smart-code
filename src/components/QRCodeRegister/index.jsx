@@ -43,13 +43,13 @@ export default function QRCodeRegister() {
       <form onSubmit={handleSubmit}>
         <div className={styles.formContent}>
           <h1 className={styles.mainTitle}>Associar Pedido</h1>
-          <label className={styles.label}>Insira o número do QRCode gerado ou da URL fornecida no QRCode</label>
+          <label className={styles.label}>Insira o número do QRCode ou da URL gerada</label>
           <input className={styles.input} type="text" placeholder="Número do QRCode ou URL" name="QRNumber" required />
 
           <label className={styles.label}>Insira o novo número do pedido</label>
           <input className={styles.input} type="text" placeholder="Número novo do pedido" name="newOrderNumber" maxLength="12" required />
 
-          <label className={styles.label}>Insira o horário desse pedido</label>
+          <label className={styles.label}>Insira o novo horário desse pedido</label>
           <input className={styles.input} type="datetime-local" name="date" required />
 
           <button className={styles.button}>Registrar novo pedido</button>

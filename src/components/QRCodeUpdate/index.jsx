@@ -42,7 +42,7 @@ export default function QRCodeUpdate() {
       <form onSubmit={handleSubmit}>
         <div className={styles.formContent}>
           <h1 className={styles.mainTitle}>Alterar Pedido</h1>
-          <label className={styles.label}>Insira o número do pedido gerado, número do QRCode ou URL fornecida</label>
+          <label className={styles.label}>Insira o número do pedido, número do QRCode ou URL gerada</label>
           <input className={styles.input} type="text" placeholder="QRCode, URL ou número do pedido" name="QRNumber" required />
 
           <label className={styles.label}>Insira a data e o horário do pedido registrado</label>
