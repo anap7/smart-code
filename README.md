@@ -1,10 +1,12 @@
-<h1 align="center">Smart Code - POC</h1>
+# Smart Code
 
-Uma POC simples para testarmos a performance da leitura e alteração de QRCode
+**Sobre** - Smart code é uma POC com o intuito de validar se é possível associar um QRCode a um pedido.
+
+**Versão** - Registro e verificação através do número do pedido ou QRCode ÚNICO (número do QRCode ou URL)
 
 ## Iniciando :zap:
-    git clone https://gitlab.com/techlab1/konsulta-web.git
-    cd konsumo-web
+    git clone https://gitlab.com/techlab1/smart-code.git
+    cd smart-code
     
 ## Atualizando dependências :zap:
     yarn install
@@ -12,6 +14,10 @@ Uma POC simples para testarmos a performance da leitura e alteração de QRCode
     
 ## Iniciando o projeto 
     npm run dev
+
+## Deploy da aplicação no Heroku 
+    git push heroku master
+
 
 ## Quem participou? :busts_in_silhouette:
 

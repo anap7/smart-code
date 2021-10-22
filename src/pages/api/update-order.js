@@ -5,9 +5,6 @@ export default async function handler(req, res) {
 
   const data = req.body;
 
-  console.log(data);
-
-  const completedDate = data?.submitValues?.completedDate;
   let searchObjCodeNumber = {};
   let searchObjOrderNumber = {};
   let searchObjUrl = {};
@@ -23,13 +20,11 @@ export default async function handler(req, res) {
 
   const resultOrderNumberVerification = await getOrder(data?.submitValues?.orderNumber);
 
-  const resultByURLVerification = await getOrderDataByURL(searchObjUrl, completedDate);
-  const resultByCodeNumberVerification = await getOrderDataByCodeNumber(searchObjCodeNumber, completedDate);
-  const resultByOrderNumberVerification = await getOrderDataByOrderNumber(searchObjOrderNumber, completedDate);
+  const resultByURLVerification = await getOrderDataByURL(searchObjUrl);
+  const resultByCodeNumberVerification = await getOrderDataByCodeNumber(searchObjCodeNumber);
+  const resultByOrderNumberVerification = await getOrderDataByOrderNumber(searchObjOrderNumber);
 
-  console.log("\n");
-  console.log("RESULTADO NA API");
-  console.log("\n");
+  ("RESULTADO NA API");
   console.log("URL");
   console.log(resultByURLVerification?._id);
   console.log("\n");
@@ -49,26 +44,20 @@ export default async function handler(req, res) {
 
   if (resultByURLVerification?._id) {
     id = resultByURLVerification?._id.toString();
-    originalQRCode = resultByURLVerification?.originalQRCode;
-    console.log("resultado url");
-    console.log(resultByURLVerification);
+    originalQRCode = resultByURLVerification?.QRCode;
 
   } else if (resultByCodeNumberVerification?._id) {
     id = resultByCodeNumberVerification?._id.toString();
-    originalQRCode = resultByCodeNumberVerification?.originalQRCode;
-    console.log("resultado code number");
-    console.log(resultByCodeNumberVerification);
+    originalQRCode = resultByCodeNumberVerification?.QRCode;
 
   } else if (resultByOrderNumberVerification?._id) {
     id = resultByOrderNumberVerification?._id.toString();
-    originalQRCode = resultByOrderNumberVerification?.originalQRCode;
-    console.log("resultado order number");
-    console.log(resultByOrderNumberVerification);
+    originalQRCode = resultByOrderNumberVerification?.QRCode;
+
   }
 
-  console.log("\n ID GERADO");
-  console.log(id);
-  console.log("\n QRCode Gerado");
+  console.log("ID Encontrado: ", id);
+  console.log("QRCode Gerado: ");
   console.log(originalQRCode);
 
   const url = `${process.env.URL}/order/${data?.submitValues?.orderNumber}`;

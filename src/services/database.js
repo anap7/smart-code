@@ -5,7 +5,7 @@ export async function saveQRCode(data) {
   try {
     const db = await connectToDatabase();
 
-    const collection = db.collection('qrcode');
+    const collection = db.collection('orders');
 
     const result = await collection.insertOne(data);
 
@@ -39,9 +39,10 @@ export async function updateOrder(data, id) {
 
     const table = collection.findOneAndUpdate(
       { _id: ObjectId(id) },
-      { $set: { ...data },
+      {
+        $set: { ...data },
       },
-      { upsert: true}
+      { upsert: true }
     )
 
     return table;
@@ -55,7 +56,7 @@ export async function getQRCode(searchObj) {
   try {
     const db = await connectToDatabase();
 
-    const collection = db.collection('qrcode');
+    const collection = db.collection('orders');
 
     const result = await collection.findOne(
       searchObj
@@ -85,10 +86,10 @@ export async function getOrder(orderNumber) {
   }
 }
 
-export async function getOrderDataByURL(searchObj, completedDate) {
+export async function getOrderDataByURL(searchObj) {
 
   if (Object.keys(searchObj).length == 0) {
-    return {error: "Void"};
+    return { error: "Void" };
   }
 
   try {
@@ -97,11 +98,11 @@ export async function getOrderDataByURL(searchObj, completedDate) {
     const collection = db.collection('orders');
 
     const result = await collection.findOne(
-      { ...searchObj, completedDate }
+      { ...searchObj }
     );
 
-    if(!result) {
-      return {error: "Not Found"};
+    if (!result) {
+      return { error: "Not Found" };
     }
 
     return result;
@@ -111,10 +112,10 @@ export async function getOrderDataByURL(searchObj, completedDate) {
   }
 }
 
-export async function getOrderDataByCodeNumber(searchObj, completedDate) {
+export async function getOrderDataByCodeNumber(searchObj) {
 
   if (Object.keys(searchObj).length == 0) {
-    return {error: "Void"};
+    return { error: "Void" };
   }
 
   try {
@@ -123,11 +124,11 @@ export async function getOrderDataByCodeNumber(searchObj, completedDate) {
     const collection = db.collection('orders');
 
     const result = await collection.findOne(
-      { ...searchObj, completedDate }
+      { ...searchObj }
     );
 
-    if(!result) {
-      return {error: "Not Found"};
+    if (!result) {
+      return { error: "Not Found" };
     }
 
     return result;
@@ -137,10 +138,10 @@ export async function getOrderDataByCodeNumber(searchObj, completedDate) {
   }
 }
 
-export async function getOrderDataByOrderNumber(searchObj, completedDate) {
+export async function getOrderDataByOrderNumber(searchObj) {
 
   if (Object.keys(searchObj).length == 0) {
-    return {error: "Void"};
+    return { error: "Void" };
   }
 
   try {
@@ -149,11 +150,11 @@ export async function getOrderDataByOrderNumber(searchObj, completedDate) {
     const collection = db.collection('orders');
 
     const result = await collection.findOne(
-      { ...searchObj, completedDate }
+      { ...searchObj }
     );
-  
-    if(!result) {
-      return {error: "Not Found"};
+
+    if (!result) {
+      return { error: "Not Found" };
     }
 
     return result;

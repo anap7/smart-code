@@ -1,9 +1,10 @@
-import { getQRCode, saveOrder, getOrder } from '../../services/database';
+import { getQRCode, getOrder, updateOrder} from '../../services/database';
 
 export default async function handler(req, res) {
 
   const data = req.body;
   let searchObj = {};
+  let id = '';
 
   if (data.type === "url") {
     searchObj = { originalURL: data?.submitValues?.qrCodeValue }
@@ -22,24 +23,28 @@ export default async function handler(req, res) {
     return res.status(406).json({ error: 'Parece que esse número de pedido já está registrado no banco, por favor, inserir um valor válido.' });
   }
 
+  if (resultQRCodeVerification?._id) {
+    id = resultQRCodeVerification?._id.toString();
+  } 
+
   const url = `${process.env.URL}/order/${data?.submitValues?.orderNumber}`;
 
   delete data.submitValues.qrCodeValue;
 
   const newObj = {
     ...data.submitValues,
-    originalQRCode: resultQRCodeVerification.QRCode,
-    originalURL: resultQRCodeVerification.originalURL,
-    originalCodeNumber: resultQRCodeVerification.codeNumber,
     url,
-    createdAt: new Date().toLocaleString()
+    createdAt: new Date().toLocaleString('pt-br')
   };
 
-  const resultOnRegisterOrder = await saveOrder(newObj);
+  const resultOnRegisterOrder = await updateOrder(newObj, id);
 
-  if (!resultOnRegisterOrder || resultOnRegisterOrder.error || !resultQRCodeVerification?.QRCode) {
-    return res.status(400).json({ error: 'Ocorreu um problema ao registrar o novo pedido.' });
+  if (!resultOnRegisterOrder?.lastErrorObject?.n) {
+    return res.status(404).json({ error: 'Ocorreu um problema ao associar o pedido, tente novamente!' });
   }
 
-  return res.status(200).json({ sucess: "Seu pedido foi registrado com sucesso!", originalQRCode: resultQRCodeVerification?.QRCode, newOrderNumber: data?.submitValues?.orderNumber });
+  if(resultOnRegisterOrder?.lastErrorObject?.n > 0) {
+    return res.status(200).json({ sucess: 'Pedido atualizado com sucesso!', originalQRCode: resultQRCodeVerification.QRCode, newOrderNumber: data?.submitValues?.orderNumber });
+  }
+
 }
