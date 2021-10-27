@@ -1,7 +1,7 @@
 .mainContent {
   margin-top: 2em;
   width: 100vw;
-  height: 70vh;
+  height: 80vh;
   text-align: center;
   display: flex;
   align-items: center;
@@ -37,11 +37,18 @@
   color: #fff;
   transition: 0.3s;
   align-self: center;
-  
 }
 
 .button:hover {
   opacity: 0.8;
+}
+
+.searchButton {
+  margin-bottom: 1.5em;
+}
+
+.foundContent {
+  margin-bottom: 1em;
 }
 
 .warning {
@@ -83,7 +90,7 @@
 }
 
 .mainTitle {
-  margin: 1em 0;
+  margin: .5em 0;
   font-size: 1.5em;
   font-weight: 500;
   color: #2D9BF0;
@@ -98,6 +105,29 @@
 
 .description span {
   color: #2D9BF0;
+}
+
+.subTitle {
+  margin-bottom: .5em;
+  font-size: 1.5em;
+  font-weight: 500;
+  color: #4dbb77;
+}
+
+.subTitleItem {
+  font-weight: 500;
+  margin-bottom: .5em;
+  color: #444242;
+  width: 400px;
+  text-align: center;
+}
+
+.subTitleItem span {
+  color: #4dbb77;
+}
+
+.buttonContent {
+  margin-top: .5em;
 }
 
 @media (max-width: 943px)

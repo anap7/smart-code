@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
-import { returnDateTime, update } from '../../services/helpers';
+import { update, findOrder } from '../../services/helpers';
 import { useState } from 'react';
 import Loader from '../Loader';
 import Link from 'next/link';
@@ -13,12 +13,23 @@ export default function QRCodeUpdate() {
   const [isLoading, setIsLoading] = useState(false);
   const [src, setSrc] = useState('');
   const [randomOrderNumber, setRandomOrderNumber] = useState(null);
+  const [foundNumber, setFoundNumber] = useState({
+    wasFound: false,
+    content: {}
+  });
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    setFoundNumber((prevState) => ({
+      ...prevState,
+      wasFound: false,
+      content: {}
+    }));
+
     setIsLoading(true);
 
-    const inputValue = e.target.QRNumber.value.trim();
+    const inputValue = foundNumber?.content?.codeNumber;
     const orderNumber = e.target.newOrderNumber.value.trim();
 
     const obj = {
@@ -33,6 +44,32 @@ export default function QRCodeUpdate() {
     return false;
   }
 
+  async function handleClick(e) {
+    e.preventDefault();
+
+    setIsLoading(true);
+    setSrc('');
+    setRandomOrderNumber(null);
+
+    const inputValue = document.getElementsByName("QRNumber")[0].value;
+
+    await findOrder(inputValue, setStatus, setFoundNumber);
+
+    setIsLoading(false);
+
+    return false;
+  }
+
+  function searchAgain() {
+    setSrc('');
+    setRandomOrderNumber(null);
+    setFoundNumber((prevState) => ({
+      ...prevState,
+      wasFound: false,
+      content: {}
+    }));
+  }
+
   if (isLoading) return <Loader />
 
   return (
@@ -40,13 +77,34 @@ export default function QRCodeUpdate() {
       <form onSubmit={handleSubmit}>
         <div className={styles.formContent}>
           <h1 className={styles.mainTitle}>Alterar Pedido</h1>
-          <label className={styles.label}>Insira o número do pedido, número do QRCode ou URL gerada</label>
-          <input className={styles.input} type="text" placeholder="QRCode, URL ou número do pedido" name="QRNumber" required />
 
-          <label className={styles.label}>Insira o novo número do pedido</label>
-          <input className={styles.input} type="text" required placeholder="Número novo do pedido" name="newOrderNumber" maxLength="12" required />
+          {
+            !foundNumber.wasFound &&
+            <>
+              <label className={styles.label}>Insira o número do pedido, número do QRCode ou URL gerada</label>
+              <input className={styles.input} type="text" placeholder="QRCode, URL ou número do pedido" name="QRNumber" required />
+              <button className={`${styles.button} ${styles.searchButton}`} onClick={handleClick}>Buscar Pedido</button>
+            </>
+          }
 
-          <button className={styles.button} type="submit">Alterar Pedido</button>
+          {
+            foundNumber.wasFound &&
+            <>
+              <div className={styles.foundContent}>
+                <h2 className={styles.subTitle}>Pedido encontrado!</h2>
+                <p className={styles.subTitleItem}>Número original do QRCode: <span>{foundNumber?.content?.codeNumber}</span></p>
+                <p className={styles.subTitleItem}>Número do pedido Atual: <span>{foundNumber?.content?.orderNumber}</span></p>
+              </div>
+
+              <label className={styles.label}>Insira o novo número do pedido</label>
+              <input className={styles.input} type="text" required placeholder="Número novo do pedido" name="newOrderNumber" maxLength="12" required />
+              
+              <p className={styles.buttonContent}>
+                <button className={`${styles.button} ${styles.searchButton}`} type="submit">Alterar Pedido</button>
+                <button className={`${styles.button} ${styles.searchButton}`} onClick={searchAgain}>Buscar Novamente</button>
+              </p>
+            </>
+          }
 
           {
             status.isThereError &&
