@@ -22,18 +22,18 @@ export default async function handler(req, res) {
   const resultByCodeNumberVerification = await getOrderData(searchObjCodeNumber);
   const resultByOrderNumberVerification = await getOrderData(searchObjOrderNumber);
 
-  ("RESULTADO NA API");
+  ("RESULTADO NA API PARA A VERIFICAÇÃO");
   console.log("URL");
-  console.log(resultByURLVerification);
+  console.log(resultByURLVerification?.codeNumber);
   console.log("\n");
-  console.log("URL ORIGINAL");
-  console.log(resultByURLOriginalVerification);
+  console.log("URL Original");
+  console.log(resultByURLOriginalVerification?.codeNumber);
   console.log("\n");
   console.log("CodeNumber");
-  console.log(resultByCodeNumberVerification);
+  console.log(resultByCodeNumberVerification?.codeNumber);
   console.log("\n");
   console.log("OrderNumber");
-  console.log(resultByOrderNumberVerification);
+  console.log(resultByOrderNumberVerification?.codeNumber);
 
   if (!resultByURLVerification?._id && !resultByCodeNumberVerification?._id && !resultByOrderNumberVerification?._id && !resultByURLOriginalVerification._id) {
     return res.status(404).json({ error: 'O pedido não foi encontrado na nossa base de dados, por favor, conferir valores' });

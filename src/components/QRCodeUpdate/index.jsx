@@ -10,6 +10,7 @@ export default function QRCodeUpdate() {
     wasSucess: false,
     description: ''
   });
+
   const [isLoading, setIsLoading] = useState(false);
   const [src, setSrc] = useState('');
   const [randomOrderNumber, setRandomOrderNumber] = useState(null);
@@ -77,12 +78,12 @@ export default function QRCodeUpdate() {
       <form onSubmit={handleSubmit}>
         <div className={styles.formContent}>
           <h1 className={styles.mainTitle}>Alterar Pedido</h1>
-
+          
           {
             !foundNumber.wasFound &&
             <>
               <label className={styles.label}>Insira o número do pedido, número do QRCode ou URL gerada</label>
-              <input className={styles.input} type="text" placeholder="QRCode, URL ou número do pedido" name="QRNumber" required />
+              <input className={styles.input} type="text" placeholder="QRCode, URL ou número do pedido" name="QRNumber" maxLength="12" required />
               <button className={`${styles.button} ${styles.searchButton}`} onClick={handleClick}>Buscar Pedido</button>
             </>
           }

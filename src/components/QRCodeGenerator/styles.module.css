@@ -1,9 +1,11 @@
 .container {
+  margin-top: 2em;
+  width: 100vw;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 4em;
 }
 
 .title {

@@ -26,18 +26,18 @@ export default async function handler(req, res) {
   const resultByCodeNumberVerification = await getOrderData(searchObjCodeNumber);
   const resultByOrderNumberVerification = await getOrderData(searchObjOrderNumber);
 
-  ("RESULTADO NA API");
+  ("RESULTADO NA API PARA A ALTERAÇÃO");
   console.log("URL");
-  console.log(resultByURLVerification?._id);
+  console.log(resultByURLVerification?.codeNumber);
   console.log("\n");
   console.log("URL ORIGINAL");
-  console.log(resultByURLOriginalVerification);
+  console.log(resultByURLOriginalVerification?.codeNumber);
   console.log("\n");
   console.log("CodeNumber");
-  console.log(resultByCodeNumberVerification?._id);
+  console.log(resultByCodeNumberVerification?.codeNumber);
   console.log("\n");
   console.log("OrderNumber");
-  console.log(resultByOrderNumberVerification?._id);
+  console.log(resultByOrderNumberVerification?.codeNumber);
 
   if (resultOrderNumberVerification?.orderNumber) {
     return res.status(404).json({ error: 'Parece que esse número de pedido já está registrado no banco, por favor, inserir um valor novo valor.' });
