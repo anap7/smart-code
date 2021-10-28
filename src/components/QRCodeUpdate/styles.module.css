@@ -50,6 +50,17 @@
   opacity: 0.8;
 }
 
+.qrcodeReaderButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+}
+
+.qrcodeReaderButton span {
+  padding-left: 1em;
+}
+
 .searchButton {
   margin-bottom: 1.5em;
 }
@@ -116,6 +127,7 @@
   border-radius: .5em;
   text-align: center;
   width: 400px;
+  margin-top: 1em;
 }
 
 .sucess{
@@ -126,6 +138,7 @@
   border-radius: .5em;
   text-align: center;
   width: 400px;
+  margin-top: 1em;
 }
 
 @media (max-width: 943px)
@@ -148,3 +161,10 @@
      width: 300px;
    }
 }
+
+@media (max-width: 331px)
+{
+  .qrcodeReaderButton span {
+    padding-left: .5em;
+  }
+} 

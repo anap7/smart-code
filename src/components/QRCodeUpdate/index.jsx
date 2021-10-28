@@ -1,8 +1,13 @@
 import styles from './styles.module.css';
-import { update, findOrder } from '../../services/helpers';
 import { useState } from 'react';
 import Loader from '../Loader';
 import Link from 'next/link';
+import dynamic from 'next/dynamic'
+import { update, findOrder } from '../../services/helpers';
+import { FaCamera } from "react-icons/fa";
+const QrReader = dynamic(() => import('react-qr-reader'), {
+  ssr: false
+})
 
 export default function QRCodeUpdate() {
   const [status, setStatus] = useState({
@@ -12,12 +17,21 @@ export default function QRCodeUpdate() {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isReading, setIsReading] = useState(false);
   const [src, setSrc] = useState('');
   const [randomOrderNumber, setRandomOrderNumber] = useState(null);
+  const [qrCodeValue, setQrCodeValue] = useState(null);
+  const [orderNumber, setOrderNumber] = useState(null);
   const [foundNumber, setFoundNumber] = useState({
     wasFound: false,
     content: {}
   });
+
+  const previewStyle = {
+    height: 240,
+    width: 320,
+    marginBottom: '6em'
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -31,7 +45,6 @@ export default function QRCodeUpdate() {
     setIsLoading(true);
 
     const inputValue = foundNumber?.content?.codeNumber;
-    const orderNumber = e.target.newOrderNumber.value.trim();
 
     const obj = {
       inputValue,
@@ -71,54 +84,99 @@ export default function QRCodeUpdate() {
     }));
   }
 
+  function handleScan(data) {
+    setFoundNumber((prevState) => ({
+      ...prevState,
+      wasFound: false,
+    }));
+
+    if (data) {
+      setIsReading(false);
+      setQrCodeValue(data);
+    }
+  }
+
   if (isLoading) return <Loader />
 
   return (
     <div className={styles.mainContent}>
-      <form onSubmit={handleSubmit}>
-        <div className={styles.formContent}>
-          <h1 className={styles.mainTitle}>Alterar Pedido</h1>
-          
-          {
-            !foundNumber.wasFound &&
-            <>
-              <label className={styles.label}>Insira o número do pedido, número do QRCode ou URL gerada</label>
-              <input className={styles.input} type="text" placeholder="QRCode, URL ou número do pedido" name="QRNumber" required />
-              <button className={`${styles.button} ${styles.searchButton}`} onClick={handleClick}>Buscar Pedido</button>
-            </>
-          }
+      <div className={styles.formContent}>
+        <h1 className={styles.mainTitle}>Alterar Pedido</h1>
+        {
+          (!foundNumber.wasFound || isReading) &&
+          <>
+            <label className={styles.label}>Insira o número do pedido, número do QRCode ou URL gerada</label>
+            <input
+              className={styles.input}
+              placeholder="QRCode, URL ou número do pedido"
+              name="QRNumber"
+              type="text"
+              onChange={(e) => setQrCodeValue(e.target.value)}
+              value={qrCodeValue && qrCodeValue}
+              required
+            />
+            <button className={`${styles.button} ${styles.searchButton}`} onClick={handleClick}>Buscar Pedido</button>
+          </>
+        }
 
-          {
-            foundNumber.wasFound &&
-            <>
-              <div className={styles.foundContent}>
-                <h2 className={styles.subTitle}>Pedido encontrado!</h2>
-                <p className={styles.subTitleItem}>Número original do QRCode: <span>{foundNumber?.content?.codeNumber}</span></p>
-                <p className={styles.subTitleItem}>Número do pedido Atual: <span>{foundNumber?.content?.orderNumber}</span></p>
-              </div>
+        {
+          isReading &&
+          <QrReader
+            style={previewStyle}
+            onError={(error) => {
+              console.log(error);
+              setIsReading(false);
+            }}
+            onScan={handleScan}
+          />
+        }
 
-              <label className={styles.label}>Insira o novo número do pedido</label>
-              <input className={styles.input} type="text" required placeholder="Número novo do pedido" name="newOrderNumber" required />
-              
-              <p className={styles.buttonContent}>
-                <button className={`${styles.button} ${styles.searchButton}`} type="submit">Alterar Pedido</button>
-                <button className={`${styles.button} ${styles.searchButton}`} onClick={searchAgain}>Buscar Novamente</button>
-              </p>
-            </>
-          }
+        {
+          !foundNumber.wasFound &&
+          <>
+            <button onClick={() => setIsReading(!isReading)} className={`${styles.button} ${styles.qrcodeReaderButton}`}>
+              <FaCamera size={'1.5em'} />
+              <span>Clique aqui pra {isReading ? "encerrar a leitura" : "ler o QRCode"}</span>
+            </button>
+          </>
+        }
 
-          {
-            status.isThereError &&
-            <p className={styles.warning}>{status.description}</p>
-          }
+        {
+          foundNumber.wasFound &&
+          <>
+            <div className={styles.foundContent}>
+              <h2 className={styles.subTitle}>Pedido encontrado!</h2>
+              <p className={styles.subTitleItem}>Número original do QRCode: <span>{foundNumber?.content?.codeNumber}</span></p>
+              <p className={styles.subTitleItem}>Número do pedido Atual: <span>{foundNumber?.content?.orderNumber}</span></p>
+            </div>
 
-          {
-            status.wasSucess &&
-            <p className={styles.sucess}>{status.description}</p>
-          }
-        </div>
-      </form>
+            <label className={styles.label}>Insira o novo número do pedido</label>
+            <input
+              className={styles.input}
+              placeholder="Número novo do pedido"
+              name="newOrderNumber"
+              type="text"
+              onChange={(e) => setOrderNumber(e.target.value)}
+              required
+            />
 
+            <p className={styles.buttonContent}>
+              <button className={`${styles.button} ${styles.searchButton}`} onClick={handleSubmit}>Alterar Pedido</button>
+              <button className={`${styles.button} ${styles.searchButton}`} onClick={searchAgain}>Buscar Novamente</button>
+            </p>
+          </>
+        }
+
+        {
+          status.isThereError &&
+          <p className={styles.warning}>{status.description}</p>
+        }
+
+        {
+          status.wasSucess &&
+          <p className={styles.sucess}>{status.description}</p>
+        }
+      </div>
       {
         randomOrderNumber &&
         <div className={styles.qrcodeResultContent}>
