@@ -2,7 +2,7 @@ import { getQRCode, getOrder, updateOrder} from '../../services/database';
 import QRCode from 'qrcode';
 
 export default async function handler(req, res) {
-
+  
   const data = req.body;
   let searchObj = {};
   let id = '';
@@ -49,5 +49,4 @@ export default async function handler(req, res) {
   if(resultOnRegisterOrder?.lastErrorObject?.n > 0) {
     return res.status(200).json({ sucess: 'Pedido atualizado com sucesso!', originalQRCode: qrcode, newOrderNumber: data?.submitValues?.orderNumber });
   }
-
 }

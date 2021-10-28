@@ -6,6 +6,4 @@ export default function Loader() {
       <div className={styles.loader} />
     </div>
   )
-
-
 }

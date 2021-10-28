@@ -1,7 +1,7 @@
 import { getOrderData } from '../../services/database';
 
 export default async function handler(req, res) {
-
+  
   const data = req.body;
 
   let searchObjCodeNumber = {};
@@ -67,7 +67,6 @@ export default async function handler(req, res) {
       url: resultByOrderNumberVerification?.url,
     };
   }
-
 
   return res.status(200).json({ sucess: "Pedido encontrado", searchResult });
 }

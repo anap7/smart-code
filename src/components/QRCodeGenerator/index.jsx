@@ -67,7 +67,6 @@ export default function QRCodeGenerator() {
               </button>
             </a>
           </div>
-
         </>
       }
     </div>
