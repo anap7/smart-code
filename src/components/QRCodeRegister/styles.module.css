@@ -44,6 +44,17 @@
   opacity: 0.8;
 }
 
+.qrcodeReaderButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+}
+
+.qrcodeReaderButton span {
+  padding-left: 1em;
+}
+
 
 .warning {
   background-color: tomato;
@@ -120,4 +131,11 @@
    .description {
      width: 300px;
    }
+}
+
+@media (max-width: 331px)
+{
+  .qrcodeReaderButton span {
+    padding-left: .5em;
+  }
 }
