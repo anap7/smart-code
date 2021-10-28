@@ -1,7 +1,7 @@
 .mainContent {
   margin-top: 2em;
   width: 100vw;
-  height: 70vh;
+  height: 80vh;
   text-align: center;
   display: flex;
   align-items: center;
@@ -14,6 +14,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.mainTitle {
+  margin: .5em 0;
+  font-size: 1.5em;
+  font-weight: 500;
+  color: #2D9BF0;
 }
 
 .label {
@@ -37,33 +44,41 @@
   color: #fff;
   transition: 0.3s;
   align-self: center;
-  
 }
 
 .button:hover {
   opacity: 0.8;
 }
 
-.warning {
-  background-color: tomato;
-  opacity: 0.8;
-  color: #fff;
-  padding: .5em;
-  border-radius: .5em;
-  margin: 1em 0;
-  text-align: center;
-  width: 400px;
+.searchButton {
+  margin-bottom: 1.5em;
 }
 
-.sucess{
-  background-color: rgb(100, 182, 89);
-  opacity: 0.8;
-  color: #fff;
-  padding: .5em;
-  border-radius: .5em;
-  margin: 1em 0;
-  text-align: center;
+.foundContent {
+  margin-bottom: 1em;
+}
+
+.subTitle {
+  margin-bottom: .5em;
+  font-size: 1.5em;
+  font-weight: 500;
+  color: #4dbb77;
+}
+
+.subTitleItem {
+  font-weight: 500;
+  margin-bottom: .5em;
+  color: #444242;
   width: 400px;
+  text-align: center;
+}
+
+.subTitleItem span {
+  color: #4dbb77;
+}
+
+.buttonContent {
+  margin-top: .5em;
 }
 
 .qrcodeResultContent {
@@ -82,13 +97,6 @@
   text-align: center;
 }
 
-.mainTitle {
-  margin: 1em 0;
-  font-size: 1.5em;
-  font-weight: 500;
-  color: #2D9BF0;
-}
-
 .description {
   font-size: 1.1em;
   font-weight: 500;
@@ -98,6 +106,26 @@
 
 .description span {
   color: #2D9BF0;
+}
+
+.warning {
+  background-color: tomato;
+  opacity: 0.8;
+  color: #fff;
+  padding: .5em;
+  border-radius: .5em;
+  text-align: center;
+  width: 400px;
+}
+
+.sucess{
+  background-color: rgb(100, 182, 89);
+  opacity: 0.8;
+  color: #fff;
+  padding: .5em;
+  border-radius: .5em;
+  text-align: center;
+  width: 400px;
 }
 
 @media (max-width: 943px)

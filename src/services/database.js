@@ -86,59 +86,7 @@ export async function getOrder(orderNumber) {
   }
 }
 
-export async function getOrderDataByURL(searchObj) {
-
-  if (Object.keys(searchObj).length == 0) {
-    return { error: "Void" };
-  }
-
-  try {
-    const db = await connectToDatabase();
-
-    const collection = db.collection('orders');
-
-    const result = await collection.findOne(
-      { ...searchObj }
-    );
-
-    if (!result) {
-      return { error: "Not Found" };
-    }
-
-    return result;
-
-  } catch (error) {
-    return { error: error };
-  }
-}
-
-export async function getOrderDataByCodeNumber(searchObj) {
-
-  if (Object.keys(searchObj).length == 0) {
-    return { error: "Void" };
-  }
-
-  try {
-    const db = await connectToDatabase();
-
-    const collection = db.collection('orders');
-
-    const result = await collection.findOne(
-      { ...searchObj }
-    );
-
-    if (!result) {
-      return { error: "Not Found" };
-    }
-
-    return result;
-
-  } catch (error) {
-    return { error: error };
-  }
-}
-
-export async function getOrderDataByOrderNumber(searchObj) {
+export async function getOrderData(searchObj) {
 
   if (Object.keys(searchObj).length == 0) {
     return { error: "Void" };

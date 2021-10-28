@@ -1,4 +1,5 @@
 import { getQRCode, getOrder, updateOrder} from '../../services/database';
+import QRCode from 'qrcode';
 
 export default async function handler(req, res) {
 
@@ -28,11 +29,13 @@ export default async function handler(req, res) {
   } 
 
   const url = `${process.env.URL}/order/${data?.submitValues?.orderNumber}`;
+  const qrcode = await QRCode.toDataURL(url).then(data => data);
 
   delete data.submitValues.qrCodeValue;
 
   const newObj = {
     ...data.submitValues,
+    QRCode: qrcode,
     url,
     createdAt: new Date().toLocaleString('pt-br')
   };
@@ -44,7 +47,7 @@ export default async function handler(req, res) {
   }
 
   if(resultOnRegisterOrder?.lastErrorObject?.n > 0) {
-    return res.status(200).json({ sucess: 'Pedido atualizado com sucesso!', originalQRCode: resultQRCodeVerification.QRCode, newOrderNumber: data?.submitValues?.orderNumber });
+    return res.status(200).json({ sucess: 'Pedido atualizado com sucesso!', originalQRCode: qrcode, newOrderNumber: data?.submitValues?.orderNumber });
   }
 
 }

@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
-import { returnDateTime, register } from '../../services/helpers';
+import { register } from '../../services/helpers';
 import { useState } from 'react';
 import Loader from '../Loader';
 import Link from 'next/link';
@@ -42,7 +42,7 @@ export default function QRCodeRegister() {
         <div className={styles.formContent}>
           <h1 className={styles.mainTitle}>Associar Pedido</h1>
           <label className={styles.label}>Insira o número do QRCode ou da URL gerada</label>
-          <input className={styles.input} type="text" placeholder="Número do QRCode ou URL" name="QRNumber" required />
+          <input className={styles.input} type="text" placeholder="Número do QRCode ou URL" name="QRNumber" maxLength="12" required />
 
           <label className={styles.label}>Insira o novo número do pedido</label>
           <input className={styles.input} type="text" placeholder="Número novo do pedido" name="newOrderNumber" maxLength="12" required />

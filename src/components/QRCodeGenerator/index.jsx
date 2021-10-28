@@ -23,7 +23,7 @@ export default function QRCodeGenerator() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          QRCode: data,
+          originalQRCode: data,
           codeNumber: orderNumber.toString(),
           originalURL: url,
           createdAt: new Date().toLocaleString()
