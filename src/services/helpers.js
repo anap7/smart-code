@@ -255,5 +255,4 @@ export async function findOrder(inputValue, setStatus, setFoundNumber) {
   }
 
   return true;
-
 }

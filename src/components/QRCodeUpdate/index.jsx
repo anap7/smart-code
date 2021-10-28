@@ -83,7 +83,7 @@ export default function QRCodeUpdate() {
             !foundNumber.wasFound &&
             <>
               <label className={styles.label}>Insira o número do pedido, número do QRCode ou URL gerada</label>
-              <input className={styles.input} type="text" placeholder="QRCode, URL ou número do pedido" name="QRNumber" maxLength="12" required />
+              <input className={styles.input} type="text" placeholder="QRCode, URL ou número do pedido" name="QRNumber" required />
               <button className={`${styles.button} ${styles.searchButton}`} onClick={handleClick}>Buscar Pedido</button>
             </>
           }
@@ -98,7 +98,7 @@ export default function QRCodeUpdate() {
               </div>
 
               <label className={styles.label}>Insira o novo número do pedido</label>
-              <input className={styles.input} type="text" required placeholder="Número novo do pedido" name="newOrderNumber" maxLength="12" required />
+              <input className={styles.input} type="text" required placeholder="Número novo do pedido" name="newOrderNumber" required />
               
               <p className={styles.buttonContent}>
                 <button className={`${styles.button} ${styles.searchButton}`} type="submit">Alterar Pedido</button>

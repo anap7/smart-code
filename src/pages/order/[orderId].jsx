@@ -1,5 +1,3 @@
-import Head from 'next/head'
-
 function Page({ orderId }) {
   return (
     <div>

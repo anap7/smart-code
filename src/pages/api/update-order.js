@@ -60,7 +60,6 @@ export default async function handler(req, res) {
     id = resultByOrderNumberVerification?._id.toString();
   }
 
-
   const url = `${process.env.URL}/order/${data?.submitValues?.orderNumber}`;
   const qrcode = await QRCode.toDataURL(url).then(data => data);
 
