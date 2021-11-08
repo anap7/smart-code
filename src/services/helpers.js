@@ -205,6 +205,7 @@ export async function findOrder(inputValue, setStatus, setFoundNumber) {
   })
     .then(res => res.json());
 
+
   if (result.error || !result || !result?.searchResult) {
     setStatus((prevState) => ({
       ...prevState,

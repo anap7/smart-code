@@ -112,7 +112,7 @@ export default function QRCodeUpdate() {
               name="QRNumber"
               type="text"
               onChange={(e) => setQrCodeValue(e.target.value)}
-              value={qrCodeValue && qrCodeValue}
+              value={qrCodeValue ? qrCodeValue : undefined}
               required
             />
             <button className={`${styles.button} ${styles.searchButton}`} onClick={handleClick}>Buscar Pedido</button>

@@ -1,11 +1,9 @@
 .container {
-  margin-top: 2em;
-  width: 100vw;
-  height: 80vh;
+  margin-top: 3em;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .title {
@@ -22,6 +20,7 @@
   font-weight: 500;
   margin-bottom: 1em;
   color: #444242;
+  text-align: center;
 }
 
 .description span {
@@ -58,6 +57,20 @@
   .title 
    {
     font-size: 1em;
-    width: 300px;
+    width: 220px;
+   }
+   .description {
+    font-size: 1em;
+   }
+}
+
+@media (max-width: 212px) {
+  .title 
+   {
+    font-size: 1em;
+    width: 200px;
+   }
+   .description {
+    font-size: 1em;
    }
 }

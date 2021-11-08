@@ -65,7 +65,7 @@ export default function QRCodeRegister() {
                 onChange={(e) => setQrCodeValue(e.target.value)}
                 type="text" 
                 placeholder="Número do QRCode ou URL" id="QRNumber" 
-                value={qrCodeValue && qrCodeValue}
+                value={qrCodeValue ? qrCodeValue : undefined }
                 required 
               />
             </>
