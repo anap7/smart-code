@@ -13,6 +13,14 @@ export default function Home() {
           </a>
         </Link>
 
+        <Link href="/search">
+          <a title="buscar-qrcode">
+            <button className={`${styles.button} ${styles.generatorButton}`}>
+              Buscar QRCode
+            </button>
+          </a>
+        </Link>
+
         <Link href="/register">
           <a title="registrar-qrcode">
             <button className={styles.button}>

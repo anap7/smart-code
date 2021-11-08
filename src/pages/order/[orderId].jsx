@@ -21,8 +21,8 @@ export async function getServerSideProps(context) {
   return {
     props: {
       codeNumber,
-      orderNumber: result?.searchResult ? result?.searchResult.orderNumber : null,
-      qrcode: result?.searchResult ? result?.searchResult.qrcode : null
+      orderNumber: result?.searchResult ? result?.searchResult?.orderNumber : null,
+      qrcode: result?.searchResult ? result?.searchResult?.qrcode : null
     }
   }
 }

@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaCamera } from "react-icons/fa";
+import { isNumeric } from '../services/helpers';
 const QrReader = dynamic(() => import('react-qr-reader'), {
   ssr: false
 })
@@ -13,6 +14,7 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
   const [isReading, setIsReading] = useState(false);
   const [qrCodeValue, setQrCodeValue] = useState(null);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const previewStyle = {
     height: 240,
@@ -23,11 +25,16 @@ export default function Page() {
   function searchOrder() {
     setIsLoading(true);
 
-    if(qrCodeValue.includes('http', 'https')) {
-      const splits = qrCodeValue.split('/order/');
-      router.push(`/order/${splits[1]}`);
+    if(!qrCodeValue) {
+      setIsEmpty(true);
+      setIsLoading(false);
     } else {
-      router.push(`/order/${qrCodeValue}`);
+      if(qrCodeValue.includes('http', 'https')) {
+        const splits = qrCodeValue.split('/order/');
+        router.push(`/order/${splits[1]}`);
+      } else {
+        router.push(`/order/${qrCodeValue}`);
+      }
     }
   }
 
@@ -76,6 +83,11 @@ export default function Page() {
         <FaCamera size={'1.5em'} />
         <span>Clique aqui pra {isReading ? "encerrar a leitura" : "ler o QRCode"}</span>
       </button>
+
+      {
+        isEmpty &&
+        <p className={styles.warning}>Número de pedido inválido</p>
+      }
     </div>
   )
 }

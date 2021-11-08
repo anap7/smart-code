@@ -58,3 +58,14 @@
 .qrcodeReaderButton span {
   padding-left: 1em;
 }
+
+.warning {
+  background-color: tomato;
+  opacity: 0.8;
+  color: #fff;
+  padding: .5em;
+  border-radius: .5em;
+  margin: 1em 0;
+  text-align: center;
+  width: 400px;
+}
