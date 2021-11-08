@@ -2,6 +2,7 @@ import styles from './styles.module.css';
 import Link from 'next/link';
 
 export default function OrderDetail({ codeNumber, orderNumber, qrcode }) {
+
   return (
     <div className={styles.container}>
       {
