@@ -21,6 +21,7 @@ export default function QRCodeRegister() {
   const [randomOrderNumber, setRandomOrderNumber] = useState(null);
   const [qrCodeValue, setQrCodeValue] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
+  const [codeNumber, setCodeNumber] = useState(null);
 
   const previewStyle = {
     height: 240,
@@ -37,9 +38,9 @@ export default function QRCodeRegister() {
       orderNumber
     }
 
-    await register(obj, setStatus, setSrc, setRandomOrderNumber);
+    await register(obj, setStatus, setSrc, setRandomOrderNumber, setCodeNumber);
     setIsLoading(false);
-
+    
     return false;
   }
 
@@ -119,12 +120,12 @@ export default function QRCodeRegister() {
         <div className={styles.qrcodeResultContent}>
           <h1 className={styles.title} >Pedido associado no QRCode</h1>
 
-          <img src={src} alt="QRCode" width={250} height={250} />
+          <img src={src} alt="QRCode" className={styles.image} />
 
           <p className={styles.description}>Novo número de pedido associado: <span>{randomOrderNumber}</span></p>
 
           <div className={styles.buttonContent}>
-            <Link href={`${process.env.URL}/order/${randomOrderNumber}`}>
+            <Link href={`${process.env.URL}/order/${codeNumber}`}>
               <a title="url" target="_blank">
                 <button className={`${styles.button} ${styles.buttonLast}`}>
                   Acessar detalhes do pedido

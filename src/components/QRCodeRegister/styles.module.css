@@ -16,6 +16,11 @@
   justify-content: center;
 }
 
+.image {
+  width: 250px;
+  height: 250px 
+}
+
 .label {
   font-size: 1.2em;
   font-weight: 500;

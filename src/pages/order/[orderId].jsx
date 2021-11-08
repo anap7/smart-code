@@ -1,17 +1,28 @@
-function Page({ orderId }) {
+import OrderDetail from "../../components/OrderDetail";
+
+function Page({ codeNumber, orderNumber, qrcode }) {
   return (
-    <div>
-        <h1>Olá esse é o pedido: {orderId}</h1>
-    </div>
+    <OrderDetail codeNumber={codeNumber} orderNumber={orderNumber} qrcode={qrcode}/>
   )
 }
 
 export async function getServerSideProps(context) {
-  const orderId = context.params.orderId;
+  const codeNumber = context.params.orderId;
+
+  const result = await fetch(`${process.env.URL}/api/get-order`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ inputValue: codeNumber, typeSearch: 'detail' })
+  })
+    .then(res => res.json());
 
   return {
     props: {
-      orderId: orderId
+      codeNumber,
+      orderNumber: result?.searchResult ? result?.searchResult.orderNumber : null,
+      qrcode: result?.searchResult ? result?.searchResult.qrcode : null
     }
   }
 }

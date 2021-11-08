@@ -46,6 +46,7 @@ export default async function handler(req, res) {
       codeNumber: resultByCodeNumberVerification?.codeNumber,
       orderNumber: resultByCodeNumberVerification?.orderNumber,
       url: resultByCodeNumberVerification?.originalURL,
+      qrcode: resultByCodeNumberVerification?.originalQRCode,
     };
 
   } else if (resultByOrderNumberVerification?._id) {
@@ -56,5 +57,14 @@ export default async function handler(req, res) {
     };
   }
 
-  return res.status(200).json({ sucess: "Pedido encontrado", searchResult });
+  if (data?.typeSearch === 'detail') {
+    if(resultByCodeNumberVerification?._id) {
+      return res.status(200).json({ sucess: "Pedido encontrado", searchResult });
+    } else {
+      return res.status(200).json({ sucess: "Pedido encontrado", searchResult });
+    }
+  } else {
+    return res.status(200).json({ sucess: "Pedido encontrado", searchResult });
+  }
+  
 }

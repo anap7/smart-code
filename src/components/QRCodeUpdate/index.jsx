@@ -22,6 +22,7 @@ export default function QRCodeUpdate() {
   const [randomOrderNumber, setRandomOrderNumber] = useState(null);
   const [qrCodeValue, setQrCodeValue] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
+  const [codeNumber, setCodeNumber] = useState(null);
   const [foundNumber, setFoundNumber] = useState({
     wasFound: false,
     content: {}
@@ -51,7 +52,7 @@ export default function QRCodeUpdate() {
       orderNumber
     }
 
-    await update(obj, setStatus, setSrc, setRandomOrderNumber);
+    await update(obj, setStatus, setSrc, setRandomOrderNumber, setCodeNumber);
 
     setIsLoading(false);
 
@@ -182,12 +183,12 @@ export default function QRCodeUpdate() {
         <div className={styles.qrcodeResultContent}>
           <h2 className={styles.title}>Pedido substituido no QRCode</h2>
 
-          <img src={src} alt="QRCode" width={250} height={250} />
+          <img src={src} alt="QRCode" className={styles.image} />
 
           <p className={styles.description}>Novo número do pedido substituido: <span>{randomOrderNumber}</span></p>
 
           <div className={styles.buttonContent}>
-            <Link href={`${process.env.URL}/order/${randomOrderNumber}`}>
+            <Link href={`${process.env.URL}/order/${codeNumber}`}>
               <a title="url" target="_blank">
                 <button className={`${styles.button} ${styles.buttonLast}`}>
                   Acessar detalhes do pedido

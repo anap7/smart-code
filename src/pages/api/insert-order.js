@@ -6,6 +6,7 @@ export default async function handler(req, res) {
   let searchObj = {};
   let id = '';
   let qrcode = '';
+  let codeNumber = '';
 
   if (data.type === "url") {
     searchObj = { originalURL: data?.submitValues?.qrCodeValue }
@@ -27,6 +28,7 @@ export default async function handler(req, res) {
   if (resultQRCodeVerification?._id) {
     id = resultQRCodeVerification?._id.toString();
     qrcode = resultQRCodeVerification?.originalQRCode;
+    codeNumber = resultQRCodeVerification?.codeNumber;
   } 
 
   delete data.submitValues.qrCodeValue;
@@ -43,6 +45,6 @@ export default async function handler(req, res) {
   }
 
   if(resultOnRegisterOrder?.lastErrorObject?.n > 0) {
-    return res.status(200).json({ sucess: 'Pedido atualizado com sucesso!', originalQRCode: qrcode, newOrderNumber: data?.submitValues?.orderNumber });
+    return res.status(200).json({ sucess: 'Pedido atualizado com sucesso!', originalQRCode: qrcode, codeNumber: codeNumber, newOrderNumber: data?.submitValues?.orderNumber });
   }
 }
