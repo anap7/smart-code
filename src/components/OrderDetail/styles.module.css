@@ -25,15 +25,19 @@
 }
 
 .description {
-  font-size: 1.2em;
+  font-size: 1.1em;
   font-weight: 500;
   margin-bottom: .5em;
   color: #444242;
   text-align: center;
-  width: 450px;
+  max-width: 600px;
 }
 
 .description span {
+  color: #2D9BF0;
+}
+
+.mark {
   color: #2D9BF0;
 }
 

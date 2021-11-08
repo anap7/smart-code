@@ -43,10 +43,10 @@ export default async function handler(req, res) {
     };
   } else if (resultByCodeNumberVerification?._id) {
     searchResult = {
-      codeNumber: resultByCodeNumberVerification?.codeNumber,
-      orderNumber: resultByCodeNumberVerification?.orderNumber,
-      url: resultByCodeNumberVerification?.originalURL,
-      qrcode: resultByCodeNumberVerification?.originalQRCode,
+      orderNumber: resultByCodeNumberVerification?.orderNumber ? resultByCodeNumberVerification?.orderNumber : null,
+      codeNumber: resultByCodeNumberVerification?.codeNumber ? resultByCodeNumberVerification?.codeNumber : null,
+      url: resultByCodeNumberVerification?.originalURL ? resultByCodeNumberVerification?.originalURL : null,
+      qrcode: resultByCodeNumberVerification?.originalQRCode ? resultByCodeNumberVerification?.originalQRCode : null,
     };
 
   } else if (resultByOrderNumberVerification?._id) {

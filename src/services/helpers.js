@@ -17,7 +17,7 @@ export function returnDateTime(date) {
   }
 }
 
-function isNumeric(str) {
+export function isNumeric(str) {
   let er = /^[0-9]+$/;
   return (er.test(str));
 }
