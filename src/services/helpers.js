@@ -22,7 +22,7 @@ function isNumeric(str) {
   return (er.test(str));
 }
 
-export async function register(data, setStatus, setSrc, setRandomOrderNumber) {
+export async function register(data, setStatus, setSrc, setRandomOrderNumber, setCodeNumber) {
 
   const qrCodeValue = data.qrCodeValue;
   let type = '';
@@ -91,12 +91,12 @@ export async function register(data, setStatus, setSrc, setRandomOrderNumber) {
 
   setSrc(result.originalQRCode);
   setRandomOrderNumber(result.newOrderNumber);
+  setCodeNumber(result.codeNumber);
 
   return true;
-
 }
 
-export async function update(data, setStatus, setSrc, setRandomOrderNumber) {
+export async function update(data, setStatus, setSrc, setRandomOrderNumber, setCodeNumber) {
 
   const inputValue = data.inputValue;
   let type = '';
@@ -156,7 +156,6 @@ export async function update(data, setStatus, setSrc, setRandomOrderNumber) {
     return false;
   }
 
-
   setStatus((prevState) => ({
     ...prevState,
     isThereError: false,
@@ -166,9 +165,9 @@ export async function update(data, setStatus, setSrc, setRandomOrderNumber) {
 
   setSrc(result.originalQRCode);
   setRandomOrderNumber(result.newOrderNumber);
+  setCodeNumber(result.codeNumber);
 
   return true;
-
 }
 
 export async function findOrder(inputValue, setStatus, setFoundNumber) {
@@ -201,7 +200,7 @@ export async function findOrder(inputValue, setStatus, setFoundNumber) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ inputValue, type })
+    body: JSON.stringify({ inputValue, type, typeSearch: 'verification' })
   })
     .then(res => res.json());
 

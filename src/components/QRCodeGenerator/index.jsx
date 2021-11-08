@@ -4,7 +4,6 @@ import QRCode from 'qrcode';
 import Loader from '../Loader';
 import { useState } from 'react';
 
-
 export default function QRCodeGenerator() {
   const [randomOrderNumber, setRandomOrderNumber] = useState(null);
   const [src, setSrc] = useState('');
@@ -12,9 +11,10 @@ export default function QRCodeGenerator() {
 
   function getRandomNumber() {
     const orderNumber = (Math.floor(100000000 + Math.random() * 900000000)) * 2;
-    const url = `${process.env.URL}/order/${orderNumber}`;
+    let url = `${process.env.URL}/order/${orderNumber}`;
 
-    QRCode.toDataURL(url).then(async (data) => {
+
+    QRCode.toDataURL(url, { width: 400}).then(async (data) => {
       setIsLoading(true);
 
       const result = await fetch(`/api/insert-qrcode`, {
@@ -35,6 +35,7 @@ export default function QRCodeGenerator() {
       setIsLoading(false);
     });
 
+    setIsLoading(false);
     setRandomOrderNumber(orderNumber);
   }
 
@@ -48,7 +49,7 @@ export default function QRCodeGenerator() {
       {
         randomOrderNumber &&
         <>
-          <img src={src} alt="QRCode" width={250} height={250} />
+          <img src={src} alt="QRCode" className={styles.image}/>
 
           <p className={styles.description}>Número do QRCode gerado: <span>{randomOrderNumber}</span></p>
 

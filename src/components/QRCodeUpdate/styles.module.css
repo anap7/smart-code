@@ -1,5 +1,4 @@
 .mainContent {
-  margin-top: 2em;
   width: 100vw;
   height: 80vh;
   text-align: center;
@@ -30,6 +29,11 @@
   color: #444242;
   width: 400px;
   text-align: center;
+}
+
+.image {
+  width: 250px;
+  height: 250px 
 }
 
 .input {
