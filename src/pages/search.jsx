@@ -52,7 +52,8 @@ export default function Page() {
       {
         !isReading &&
         <>
-          <h1 className={styles.mainTitle}>Insira o número do QRCode</h1>
+          <h1 className={styles.mainTitle}>Buscar QRCode</h1>
+          <p className={styles.description}>Para saber informações referentes ao seu pedido, digite o número dele ou scaneie o QR Code.</p>
           <input
             type="text"
             className={styles.input}

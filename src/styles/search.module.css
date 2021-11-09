@@ -24,6 +24,15 @@
   text-align: center;
 }
 
+.description {
+  font-size: 1.1em;
+  font-weight: 500;
+  margin-bottom: 1em;
+  color: #444242;
+  max-width: 450px;
+  text-align: center;
+}
+
 .image {
   width: 250px;
   height: 250px 
