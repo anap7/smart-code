@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaCamera } from "react-icons/fa";
-import { isNumeric } from '../services/helpers';
 const QrReader = dynamic(() => import('react-qr-reader'), {
   ssr: false
 })
@@ -73,7 +72,7 @@ export default function Page() {
         <QrReader
           style={previewStyle}
           onError={(error) => {
-            console.log(error);
+            alert("Ocorreu um problema durante a leitura QRCode");
             setIsReading(false);
           }}
           onScan={handleScan}

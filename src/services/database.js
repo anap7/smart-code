@@ -1,6 +1,36 @@
 import { connectToDatabase } from '../utils/connection';
 const ObjectId = require('mongodb').ObjectId;
 
+export async function generateQRCodeNumber() {
+  try {
+    const db = await connectToDatabase();
+
+    const collection = db.collection('orders');
+
+    let randomNumber = 420000;
+    let qrcodeNumberString = `QR${randomNumber}`;
+    const codeNumberList = [];
+
+    const searchResult = await collection.find();
+
+    const arr = await searchResult.toArray();
+
+    for (let index in arr) {
+      codeNumberList.push(arr[index].codeNumber);
+    }
+
+    do  {
+      const number = ((Math.floor(Math.random() * 700) + 1) * (Math.floor(Math.random() * 5) + 1));
+      randomNumber = randomNumber + number;
+      qrcodeNumberString = `QR${randomNumber}`;
+    } while (codeNumberList.includes(qrcodeNumberString));
+
+    return JSON.stringify({ success: 'Novo número gerado', codeNumber: qrcodeNumberString });
+  } catch (e) {
+    return JSON.stringify({ error: 'Não encontrado' });
+  }
+}
+
 export async function saveQRCode(data) {
   try {
     const db = await connectToDatabase();
@@ -31,16 +61,49 @@ export async function saveOrder(data) {
   }
 }
 
+export async function attachedOrder(data, id) {
+  try {
+    const db = await connectToDatabase();
+
+    const collection = db.collection('orders');
+    
+    const table = collection.findOneAndUpdate(
+      { _id: ObjectId(id) },
+      {
+        $set: { 
+          ...data,
+          orderAttachedAt: new Date().toLocaleString('pt-br'),
+          ordersUpdateList: [
+            {
+              orderNumber: data?.orderNumber,
+              updatedAt: new Date().toLocaleString('pt-br'),
+              status: 'attached',
+            }
+          ] 
+        },
+      },
+      { upsert: true }
+    )
+
+    return table;
+
+  } catch (error) {
+    return { error: error };
+  }
+}
+
 export async function updateOrder(data, id) {
   try {
     const db = await connectToDatabase();
 
     const collection = db.collection('orders');
-
+    
     const table = collection.findOneAndUpdate(
       { _id: ObjectId(id) },
       {
-        $set: { ...data },
+        $set: { 
+          ...data
+        },
       },
       { upsert: true }
     )

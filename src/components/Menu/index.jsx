@@ -13,7 +13,7 @@ export default function Menu({ children }) {
         <div className={styles.contentItems}>
           <Link href="/generator">
             <a title="GerarQRCode">
-              <span className={styles.items}>Gerar novo QRCode</span>
+              <span className={styles.items}>Gerar QRCode</span>
             </a>
           </Link>
           <Link href="/search">

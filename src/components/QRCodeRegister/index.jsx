@@ -77,7 +77,7 @@ export default function QRCodeRegister() {
             <QrReader
               style={previewStyle}
               onError={(error) => {
-                console.log(error);
+                alert("Ocorreu um problema durante a leitura QRCode");
                 setIsReading(false);
               }}
               onScan={handleScan}

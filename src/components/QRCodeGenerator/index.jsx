@@ -9,34 +9,43 @@ export default function QRCodeGenerator() {
   const [src, setSrc] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  function getRandomNumber() {
-    const orderNumber = (Math.floor(100000000 + Math.random() * 900000000)) * 2;
-    let url = `${process.env.URL}/order/${orderNumber}`;
+  async function getRandomNumber() {
 
+    setIsLoading(true);
 
-    QRCode.toDataURL(url, { width: 400}).then(async (data) => {
-      setIsLoading(true);
+    const verificationResult = await fetch(`/api/generate-qrcode-number`, {
+      method: 'GET',
+      mode: 'no-cors'
+    })
+      .then(res => res.json());
 
-      const result = await fetch(`/api/insert-qrcode`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          originalQRCode: data,
-          codeNumber: orderNumber.toString(),
-          originalURL: url,
-          createdAt: new Date().toLocaleString()
+    if (verificationResult?.codeNumber) {
+      const codeNumber = verificationResult?.codeNumber;
+      const url = `${process.env.URL}/order/${codeNumber}`;
+
+      QRCode.toDataURL(url, { width: 400 }).then(async (data) => {
+        const registerResult = await fetch(`/api/insert-qrcode`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            codeNumber: codeNumber,
+            originalQRCode: data,
+            originalURL: url,
+            createdAt: new Date().toLocaleString()
+          })
         })
-      })
-        .then(res => res.json());
+          .then(res => res.json());
+        setSrc(data);
+      });
 
-      setSrc(data);
-      setIsLoading(false);
-    });
+      setRandomOrderNumber(codeNumber);
 
-    setIsLoading(false);
-    setRandomOrderNumber(orderNumber);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
+    }
   }
 
   if (isLoading) return <Loader />
@@ -49,7 +58,7 @@ export default function QRCodeGenerator() {
       {
         randomOrderNumber &&
         <>
-          <img src={src} alt="QRCode" className={styles.image}/>
+          <img src={src} alt="QRCode" className={styles.image} />
 
           <p className={styles.description}>Número do QRCode gerado: <span>{randomOrderNumber}</span></p>
 

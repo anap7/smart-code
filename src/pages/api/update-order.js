@@ -7,6 +7,7 @@ export default async function handler(req, res) {
   let searchObjCodeNumber = {};
   let searchObjOrderNumber = {};
   let searchObjOriginalUrl = {};
+  let ordersUpdateList = [];
   let id = "";
   let qrcode = "";
   let codeNumber = "";
@@ -24,16 +25,6 @@ export default async function handler(req, res) {
   const resultByCodeNumberVerification = await getOrderData(searchObjCodeNumber);
   const resultByOrderNumberVerification = await getOrderData(searchObjOrderNumber);
 
-  console.log("RESULTADO NA API PARA A ALTERAÇÃO");
-  console.log("URL ORIGINAL");
-  console.log(resultByURLOriginalVerification?.codeNumber);
-  console.log("\n");
-  console.log("CodeNumber");
-  console.log(resultByCodeNumberVerification?.codeNumber);
-  console.log("\n");
-  console.log("OrderNumber");
-  console.log(resultByOrderNumberVerification?.codeNumber);
-
   if (resultOrderNumberVerification?.orderNumber) {
     return res.status(404).json({ error: 'Parece que esse número de pedido já está registrado no banco, por favor, inserir um valor novo valor.' });
   }
@@ -46,21 +37,31 @@ export default async function handler(req, res) {
     id = resultByURLOriginalVerification?._id.toString();
     qrcode = resultByURLOriginalVerification?.originalQRCode;
     codeNumber = resultByURLOriginalVerification?.codeNumber;
+    ordersUpdateList = resultByURLOriginalVerification?.ordersUpdateList;
 
   } else if (resultByCodeNumberVerification?._id) {
     id = resultByCodeNumberVerification?._id.toString();
     qrcode = resultByCodeNumberVerification?.originalQRCode;
     codeNumber = resultByCodeNumberVerification?.codeNumber;
+    ordersUpdateList = resultByCodeNumberVerification?.ordersUpdateList;
 
   } else if (resultByOrderNumberVerification?._id) {
     id = resultByOrderNumberVerification?._id.toString();
     qrcode = resultByOrderNumberVerification?.originalQRCode;
     codeNumber = resultByOrderNumberVerification?.codeNumber;
+    ordersUpdateList = resultByOrderNumberVerification?.ordersUpdateList;
   }
+
+  ordersUpdateList.push({
+    orderNumber: data?.submitValues?.orderNumber,
+    updatedAt: new Date().toLocaleString('pt-br'),
+    status: 'update'
+  });
 
   const newObj = {
     orderNumber: data?.submitValues?.orderNumber,
-    updatedAt: new Date().toLocaleString('pt-br')
+    updatedAt: new Date().toLocaleString('pt-br'),
+    ordersUpdateList: ordersUpdateList
   };
 
   const updateResult = await updateOrder(newObj, id);

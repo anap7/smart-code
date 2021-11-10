@@ -27,11 +27,22 @@ export async function register(data, setStatus, setSrc, setRandomOrderNumber, se
   const qrCodeValue = data.qrCodeValue;
   let type = '';
 
+  if (qrCodeValue === "" || qrCodeValue === null) {
+    setStatus((prevState) => ({
+      ...prevState,
+      isThereError: true,
+      wasSucess: false,
+      description: "O número do QRCode é um valor inválido."
+    }));
+
+    return false;
+  }
+
   if (qrCodeValue.includes('http', 'https')) {
     type = 'url';
   } else {
     type = 'number';
-    if (!isNumeric(qrCodeValue)) {
+    if (!qrCodeValue.includes("QR")) {
       setStatus((prevState) => ({
         ...prevState,
         isThereError: true,
@@ -99,25 +110,10 @@ export async function register(data, setStatus, setSrc, setRandomOrderNumber, se
 export async function update(data, setStatus, setSrc, setRandomOrderNumber, setCodeNumber) {
 
   const inputValue = data.inputValue;
+
   let type = '';
 
-  if (inputValue.includes('http', 'https')) {
-    type = 'url';
-  } else {
-    type = 'number';
-    if (!isNumeric(inputValue)) {
-      setStatus((prevState) => ({
-        ...prevState,
-        isThereError: true,
-        wasSucess: false,
-        description: "O número de verificação é um valor inválido."
-      }));
-
-      setSrc('');
-      setRandomOrderNumber(null);
-      return false;
-    }
-  }
+  inputValue.includes('http', 'https') ? type = 'url' : type = 'number';
 
   if (!isNumeric(data.orderNumber)) {
     setStatus((prevState) => ({
@@ -174,25 +170,22 @@ export async function findOrder(inputValue, setStatus, setFoundNumber) {
 
   let type = '';
 
-  if (inputValue.includes('http', 'https')) {
-    type = 'url';
-  } else {
-    type = 'number';
-    if (!isNumeric(inputValue)) {
-      setStatus((prevState) => ({
-        ...prevState,
-        isThereError: true,
-        wasSucess: false,
-        description: "O número de verificação é um valor inválido."
-      }));
+  inputValue.includes('http', 'https') ? type = 'url' : type = 'number';
 
-      setFoundNumber((prevState) => ({
-        ...prevState,
-        wasFound: false,
-        content: {}
-      }));
-      return false;
-    }
+  if (inputValue === "" || inputValue === null) {
+    setStatus((prevState) => ({
+      ...prevState,
+      isThereError: true,
+      wasSucess: false,
+      description: "O número de verificação é um valor inválido."
+    }));
+
+    setFoundNumber((prevState) => ({
+      ...prevState,
+      wasFound: false,
+      content: {}
+    }));
+    return false;
   }
 
   const result = await fetch(`/api/get-order`, {
@@ -227,7 +220,7 @@ export async function findOrder(inputValue, setStatus, setFoundNumber) {
       ...prevState,
       isThereError: true,
       wasSucess: false,
-      description: "Parece que esse QRCode não tem um pedido associado ainda, por favor acesse a página de associar pedido para fazer o processo de update."
+      description: "Parece que esse QRCode não tem um pedido associado ainda, por favor acesse a página de associar pedido para fazer o processo de atualização."
     }));
 
     setFoundNumber((prevState) => ({
