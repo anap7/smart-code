@@ -6,9 +6,9 @@ export default function Home() {
     <div className={styles.container}>
       <div className={styles.buttonContent}>
         <Link href="/generator">
-          <a title="gerar-novo-qrcode">
+          <a title="gerar-qrcode">
             <button className={`${styles.button} ${styles.generatorButton}`}>
-              Gerar novo QRCode
+              Gerar QRCode
             </button>
           </a>
         </Link>

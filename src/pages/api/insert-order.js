@@ -1,4 +1,4 @@
-import { getQRCode, getOrder, updateOrder} from '../../services/database';
+import { getQRCode, getOrder, attachedOrder} from '../../services/database';
 
 export default async function handler(req, res) {
   
@@ -15,14 +15,19 @@ export default async function handler(req, res) {
   }
 
   const resultQRCodeVerification = await getQRCode(searchObj);
+
   const resultOrderNumberVerification = await getOrder(data?.submitValues?.orderNumber);
+
+  if (resultOrderNumberVerification?.orderNumber) {
+    return res.status(406).json({ error: 'Parece que esse número de pedido já está registrado no banco, por favor, inserir um valor válido.' });
+  }
 
   if (!resultQRCodeVerification || resultQRCodeVerification.error || (!resultQRCodeVerification?.QRCode && !resultQRCodeVerification?.codeNumber)) {
     return res.status(404).json({ error: 'QRCode não encontrado na base de dados. Por favor, gerar um novo QRCode ou tente novamente.' });
   }
 
-  if (resultOrderNumberVerification?.orderNumber) {
-    return res.status(406).json({ error: 'Parece que esse número de pedido já está registrado no banco, por favor, inserir um valor válido.' });
+  if (resultQRCodeVerification?.orderNumber) {
+    return res.status(406).json({ error: `Esse pedido já está associado ao número ${resultQRCodeVerification?.orderNumber}, por favor, para mudar o número do pedido acesse a página de alterar pedido.` });
   }
 
   if (resultQRCodeVerification?._id) {
@@ -38,7 +43,7 @@ export default async function handler(req, res) {
     createdAt: new Date().toLocaleString('pt-br')
   };
 
-  const resultOnRegisterOrder = await updateOrder(newObj, id);
+  const resultOnRegisterOrder = await attachedOrder(newObj, id);
 
   if (!resultOnRegisterOrder?.lastErrorObject?.n) {
     return res.status(404).json({ error: 'Ocorreu um problema ao associar o pedido, tente novamente!' });

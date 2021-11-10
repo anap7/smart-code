@@ -60,7 +60,6 @@
   padding-left: 1em;
 }
 
-
 .warning {
   background-color: tomato;
   opacity: 0.8;
@@ -116,8 +115,6 @@
 .description span {
   color: #2D9BF0;
 }
-
-
 
 @media (max-width: 943px)
 {
