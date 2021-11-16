@@ -1,12 +1,9 @@
-.mainContent {
-  margin-top: 2em;
-  width: 100vw;
-  height: 70vh;
-  text-align: center;
+.container {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  text-align: center;
 }
 
 .formContent {

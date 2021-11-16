@@ -54,7 +54,7 @@ export default function QRCodeRegister() {
   if (isLoading) return <Loader />
 
   return (
-    <div className={styles.mainContent}>
+    <div className={styles.container}>
         <div className={styles.formContent}>
           <h1 className={styles.mainTitle}>Associar Pedido</h1>
           {

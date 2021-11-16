@@ -17,7 +17,7 @@ export async function getServerSideProps(context) {
     body: JSON.stringify({ inputValue: codeNumber, typeSearch: 'detail' })
   })
     .then(res => res.json());
-
+  
   return {
     props: {
       codeNumber,

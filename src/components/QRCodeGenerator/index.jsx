@@ -9,6 +9,8 @@ export default function QRCodeGenerator() {
   const [src, setSrc] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const resultClass = [ styles.container ];
+
   async function getRandomNumber() {
 
     setIsLoading(true);
@@ -49,9 +51,10 @@ export default function QRCodeGenerator() {
   }
 
   if (isLoading) return <Loader />
+  if (randomOrderNumber) resultClass.push(styles.contentResult);
 
   return (
-    <div className={styles.container}>
+    <div className={ resultClass.join(' ')}>
       <h1 className={styles.title}>Clique no botão abaixo para gerar um QRCode aleatório com um novo número de pedido</h1>
       <button onClick={getRandomNumber} className={styles.button}>Gerar QRCode {randomOrderNumber && 'novamente'}</button>
 
