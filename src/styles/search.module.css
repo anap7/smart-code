@@ -1,24 +1,21 @@
 .container {
-  width: 100vw;
-  height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
 
 .mainTitle {
-  margin: .5em 0;
+  margin-bottom: 0.5em;
   font-size: 1.5em;
   font-weight: 500;
-  color: #2D9BF0;
+  color: #2d9bf0;
 }
 
 .label {
   font-size: 1.2em;
   font-weight: 500;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
   color: #444242;
   width: 400px;
   text-align: center;
@@ -35,7 +32,7 @@
 
 .image {
   width: 250px;
-  height: 250px 
+  height: 250px;
 }
 
 .input {
@@ -44,9 +41,9 @@
 
 .button {
   margin: 0 1em;
-  padding: .8em;
-  border: 1px solid #2D9BF0;
-  background-color: #2D9BF0;
+  padding: 0.8em;
+  border: 1px solid #2d9bf0;
+  background-color: #2d9bf0;
   color: #fff;
   transition: 0.3s;
   align-self: center;
@@ -72,9 +69,24 @@
   background-color: tomato;
   opacity: 0.8;
   color: #fff;
-  padding: .5em;
-  border-radius: .5em;
+  padding: 0.5em;
+  border-radius: 0.5em;
   margin: 1em 0;
   text-align: center;
   width: 400px;
+}
+
+@media (max-width: 348px) {
+  .description {
+    font-size: 1em;
+  }
+  .qrcodeReaderButton {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 320px) {
+  .qrcodeReaderButton {
+    font-size: 0.7em;
+  }
 }

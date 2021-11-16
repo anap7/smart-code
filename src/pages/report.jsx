@@ -1,7 +1,9 @@
+import Logs from '../components/Logs';
+
 export default function Page() {
   return (
     <>
-      <h1>Relatório de logs</h1>
+      <Logs />
     </>
   )
 }

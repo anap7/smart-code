@@ -61,25 +61,20 @@
 }
 
 
-@media (max-width: 600px)
-{
-  .title 
-   {
-    font-size: 1em;
-    width: 220px;
-   }
+@media (max-width: 620px){
    .description {
-    font-size: 1em;
+    max-width: 450px;
+   }
+}
+
+@media (max-width: 510px){
+   .description {
+    max-width: 300px;
    }
 }
 
 @media (max-width: 212px) {
-  .title 
-   {
-    font-size: 1em;
-    width: 200px;
-   }
    .description {
-    font-size: 1em;
+    font-size: .8em;
    }
 }

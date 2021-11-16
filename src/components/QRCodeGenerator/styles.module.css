@@ -1,5 +1,4 @@
 .container {
-  margin-top: 3em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,23 +56,16 @@
   justify-content: center;
 }
 
+.contentResult {
+  margin-top: 2em;
+}
+
 @media (max-width: 600px)
 {
   .title 
    {
     font-size: 1em;
     width: 220px;
-   }
-   .description {
-    font-size: 1em;
-   }
-}
-
-@media (max-width: 212px) {
-  .title 
-   {
-    font-size: 1em;
-    width: 200px;
    }
    .description {
     font-size: 1em;
