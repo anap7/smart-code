@@ -1,4 +1,5 @@
 import { connectToDatabase } from '../utils/connection';
+import { createCompletedDate } from '../services/helpers';
 const ObjectId = require('mongodb').ObjectId;
 
 export async function generateQRCodeNumber() {
@@ -72,11 +73,11 @@ export async function attachedOrder(data, id) {
       {
         $set: { 
           ...data,
-          orderAttachedAt: new Date().toLocaleString('pt-br'),
+          orderAttachedAt: createCompletedDate(),
           ordersUpdateList: [
             {
               orderNumber: data?.orderNumber,
-              updatedAt: new Date().toLocaleString('pt-br'),
+              updatedAt: createCompletedDate(),
               status: 'attached',
             }
           ] 
