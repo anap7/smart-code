@@ -3,6 +3,7 @@ import styles from './styles.module.css';
 import QRCode from 'qrcode';
 import Loader from '../Loader';
 import { useState } from 'react';
+import { createCompletedDate } from '../../services/helpers';
 
 export default function QRCodeGenerator() {
   const [randomOrderNumber, setRandomOrderNumber] = useState(null);
@@ -35,7 +36,7 @@ export default function QRCodeGenerator() {
             codeNumber: codeNumber,
             originalQRCode: data,
             originalURL: url,
-            createdAt: new Date().toLocaleString()
+            createdAt: createCompletedDate()
           })
         })
           .then(res => res.json());

@@ -1,5 +1,5 @@
 export function returnDateTime(date) {
-  const currentDate = new Date(date);
+  const currentDate = Date.parse(date);
 
   let month = currentDate.getMonth() + 1;
   month = month < 10 ? '0' + month : month;
@@ -15,6 +15,14 @@ export function returnDateTime(date) {
     time: time,
     completedDate: `${dateFormated}-${time}`
   }
+}
+
+export function createCompletedDate() {
+  const currentDate = new Date();
+  const numberDate = Date.parse(currentDate);
+  const currentDateFormated = new Date(numberDate).toLocaleString('pt-br');
+  
+  return currentDateFormated;
 }
 
 export function isNumeric(str) {

@@ -1,4 +1,5 @@
 import { getOrder, getOrderData, updateOrder } from '../../services/database';
+import { createCompletedDate } from '../../services/helpers';
 
 export default async function handler(req, res) {
 
@@ -54,13 +55,13 @@ export default async function handler(req, res) {
 
   ordersUpdateList.push({
     orderNumber: data?.submitValues?.orderNumber,
-    updatedAt: new Date().toLocaleString('pt-br'),
+    updatedAt: createCompletedDate(),
     status: 'update'
   });
 
   const newObj = {
     orderNumber: data?.submitValues?.orderNumber,
-    updatedAt: new Date().toLocaleString('pt-br'),
+    updatedAt: createCompletedDate(),
     ordersUpdateList: ordersUpdateList
   };
 
