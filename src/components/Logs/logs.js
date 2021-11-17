@@ -4,7 +4,6 @@ module.exports = [
     orderNumber: "797000",
     createdAt: "10/11/2021 14:06:56",
     orderAttachedAt: "10/11/2021 14:06:58",
-    updatedAt: "10/11/2021 14:08:07",
     ordersUpdateList: [
       {
         orderNumber: "098978",
