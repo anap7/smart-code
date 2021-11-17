@@ -176,3 +176,39 @@ export async function getOrderData(searchObj) {
     return { error: error };
   }
 }
+
+export async function getLogs() {
+  try {
+    const ordersList = [];
+    const db = await connectToDatabase();
+
+    const collection = db.collection('orders');
+
+    const result = await collection.find();
+
+    if (!result) {
+      return { error: "Not Found" };
+    }
+    const arr = await result.toArray();
+
+    for (let index in arr) {
+
+      if(arr[index]) {
+        const order = {
+          codeNumber: arr[index]?.codeNumber ? arr[index]?.codeNumber : null, 
+          orderNumber: arr[index]?.orderNumber ? arr[index]?.orderNumber : null, 
+          createdAt: arr[index]?.createdAt ? arr[index]?.createdAt : null, 
+          orderAttachedAt: arr[index]?.orderAttachedAt ? arr[index]?.orderAttachedAt : null, 
+          ordersUpdateList: arr[index]?.ordersUpdateList ? arr[index]?.ordersUpdateList : null, 
+        }
+        
+        ordersList.push(order);
+      }
+    }
+
+    return ordersList;
+
+  } catch (error) {
+    return { error: error };
+  }
+}
