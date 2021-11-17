@@ -20,9 +20,10 @@ export function returnDateTime(date) {
 export function createCompletedDate() {
   const currentDate = new Date();
   const numberDate = Date.parse(currentDate);
-  const currentDateFormated = new Date(numberDate).toLocaleString('pt-br');
-  
-  return currentDateFormated;
+  const currentDateFormated = new Date(numberDate).toLocaleDateString('pt-BR');
+  const currentTimeFormated = new Date(numberDate).toLocaleTimeString('pt-BR', { hour12: false, hour: "numeric", minute: "numeric"});
+
+  return `${currentDateFormated}-${currentTimeFormated}`;
 }
 
 export function isNumeric(str) {
