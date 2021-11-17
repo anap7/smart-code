@@ -23,6 +23,9 @@ export function createCompletedDate() {
   const currentDate = moment().tz("America/Sao_Paulo").format();
   const date = moment(currentDate).format('DD/MM/YYYY HH:mm:ss');
 
+  console.log(currentDate);
+  console.log(date);
+
   return date;
 }
 
