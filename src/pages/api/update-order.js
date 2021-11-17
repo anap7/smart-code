@@ -53,7 +53,7 @@ export default async function handler(req, res) {
     ordersUpdateList = resultByOrderNumberVerification?.ordersUpdateList;
   }
 
-  ordersUpdateList.push({
+  ordersUpdateList.unshift({
     orderNumber: data?.submitValues?.orderNumber,
     updatedAt: moment().tz("America/Sao_Paulo").format('DD/MM/YYYY HH:mm:ss'),
     status: 'update'
