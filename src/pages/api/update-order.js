@@ -4,6 +4,7 @@ import { createCompletedDate } from '../../services/helpers';
 export default async function handler(req, res) {
 
   const data = req.body;
+  const currentDate = createCompletedDate();
 
   let searchObjCodeNumber = {};
   let searchObjOrderNumber = {};
@@ -55,13 +56,13 @@ export default async function handler(req, res) {
 
   ordersUpdateList.push({
     orderNumber: data?.submitValues?.orderNumber,
-    updatedAt: createCompletedDate(),
+    updatedAt: currentDate,
     status: 'update'
   });
 
   const newObj = {
     orderNumber: data?.submitValues?.orderNumber,
-    updatedAt: createCompletedDate(),
+    updatedAt: currentDate,
     ordersUpdateList: ordersUpdateList
   };
 

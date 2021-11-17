@@ -25,6 +25,10 @@ export default function QRCodeGenerator() {
     if (verificationResult?.codeNumber) {
       const codeNumber = verificationResult?.codeNumber;
       const url = `${process.env.URL}/order/${codeNumber}`;
+      const currentDate = createCompletedDate();
+
+      console.log("Gerando o QRCode")
+      console.log(currentDate);
 
       QRCode.toDataURL(url, { width: 400 }).then(async (data) => {
         const registerResult = await fetch(`/api/insert-qrcode`, {
@@ -36,7 +40,7 @@ export default function QRCodeGenerator() {
             codeNumber: codeNumber,
             originalQRCode: data,
             originalURL: url,
-            createdAt: createCompletedDate()
+            createdAt: currentDate
           })
         })
           .then(res => res.json());

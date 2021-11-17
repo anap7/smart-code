@@ -65,6 +65,7 @@ export async function saveOrder(data) {
 export async function attachedOrder(data, id) {
   try {
     const db = await connectToDatabase();
+    const currentDate = createCompletedDate();
 
     const collection = db.collection('orders');
     
@@ -73,11 +74,11 @@ export async function attachedOrder(data, id) {
       {
         $set: { 
           ...data,
-          orderAttachedAt: createCompletedDate(),
+          orderAttachedAt: currentDate,
           ordersUpdateList: [
             {
               orderNumber: data?.orderNumber,
-              updatedAt: createCompletedDate(),
+              updatedAt: currentDate,
               status: 'attached',
             }
           ] 
