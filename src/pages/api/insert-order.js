@@ -40,8 +40,7 @@ export default async function handler(req, res) {
   delete data.submitValues.qrCodeValue;
 
   const newObj = {
-    ...data.submitValues,
-    createdAt: createCompletedDate()
+    ...data.submitValues
   };
 
   const resultOnRegisterOrder = await attachedOrder(newObj, id);
