@@ -1,5 +1,4 @@
 import { getQRCode, getOrder, attachedOrder} from '../../services/database';
-import { createCompletedDate } from '../../services/helpers'
 
 export default async function handler(req, res) {
   

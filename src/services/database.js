@@ -1,5 +1,5 @@
 import { connectToDatabase } from '../utils/connection';
-import { createCompletedDate } from '../services/helpers';
+import moment from 'moment-timezone';
 const ObjectId = require('mongodb').ObjectId;
 
 export async function generateQRCodeNumber() {
@@ -65,6 +65,7 @@ export async function saveOrder(data) {
 export async function attachedOrder(data, id) {
   try {
     const db = await connectToDatabase();
+    const currentDate = moment().tz("America/Sao_Paulo").format('DD/MM/YYYY HH:mm:ss');
 
     const collection = db.collection('orders');
     
@@ -73,11 +74,11 @@ export async function attachedOrder(data, id) {
       {
         $set: { 
           ...data,
-          orderAttachedAt: createCompletedDate(),
+          orderAttachedAt: currentDate,
           ordersUpdateList: [
             {
               orderNumber: data?.orderNumber,
-              updatedAt: createCompletedDate(),
+              updatedAt: currentDate,
               status: 'attached',
             }
           ] 
