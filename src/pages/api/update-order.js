@@ -1,10 +1,9 @@
+import moment from 'moment-timezone';
 import { getOrder, getOrderData, updateOrder } from '../../services/database';
-import { createCompletedDate } from '../../services/helpers';
 
 export default async function handler(req, res) {
 
   const data = req.body;
-  const currentDate = createCompletedDate();
 
   let searchObjCodeNumber = {};
   let searchObjOrderNumber = {};
@@ -56,13 +55,12 @@ export default async function handler(req, res) {
 
   ordersUpdateList.push({
     orderNumber: data?.submitValues?.orderNumber,
-    updatedAt: currentDate,
+    updatedAt: moment().tz("America/Sao_Paulo").format('DD/MM/YYYY HH:mm:ss'),
     status: 'update'
   });
 
   const newObj = {
     orderNumber: data?.submitValues?.orderNumber,
-    updatedAt: currentDate,
     ordersUpdateList: ordersUpdateList
   };
 

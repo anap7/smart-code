@@ -1,5 +1,3 @@
-import moment from "moment-timezone";
-
 export function returnDateTime(date) {
   const currentDate = Date.parse(date);
 
@@ -17,16 +15,6 @@ export function returnDateTime(date) {
     time: time,
     completedDate: `${dateFormated}-${time}`,
   };
-}
-
-export function createCompletedDate() {
-  const currentDate = moment().tz("America/Sao_Paulo").format();
-  const date = moment(currentDate).format('DD/MM/YYYY HH:mm:ss');
-
-  console.log(currentDate);
-  console.log(date);
-
-  return date;
 }
 
 export function isNumeric(str) {

@@ -2,8 +2,8 @@ import Link from 'next/link';
 import styles from './styles.module.css';
 import QRCode from 'qrcode';
 import Loader from '../Loader';
+import moment from "moment-timezone";
 import { useState } from 'react';
-import { createCompletedDate } from '../../services/helpers';
 
 export default function QRCodeGenerator() {
   const [randomOrderNumber, setRandomOrderNumber] = useState(null);
@@ -25,10 +25,7 @@ export default function QRCodeGenerator() {
     if (verificationResult?.codeNumber) {
       const codeNumber = verificationResult?.codeNumber;
       const url = `${process.env.URL}/order/${codeNumber}`;
-      const currentDate = createCompletedDate();
-
-      console.log("Gerando o QRCode")
-      console.log(currentDate);
+      const currentDate = moment().tz("America/Sao_Paulo").format('DD/MM/YYYY HH:mm:ss');
 
       QRCode.toDataURL(url, { width: 400 }).then(async (data) => {
         const registerResult = await fetch(`/api/insert-qrcode`, {
