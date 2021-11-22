@@ -5,6 +5,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic'
 import { update, findOrder } from '../../services/helpers';
 import { FaCamera } from "react-icons/fa";
+import html2canvas from 'html2canvas';
 const QrReader = dynamic(() => import('react-qr-reader'), {
   ssr: false
 })
@@ -32,6 +33,26 @@ export default function QRCodeUpdate() {
     height: 240,
     width: 320,
     marginBottom: '6em'
+  }
+
+  function download() {
+    setIsLoading(true);
+
+    const content = document.getElementById("qrcodeimg");
+
+    if (!content) {
+      setImageNotExist(true);
+      return;
+    }
+
+    html2canvas(content).then(canvas => {
+      const link = document.createElement('a')
+      link.download = `${codeNumber}.png`
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+
+    setIsLoading(false);
   }
 
   async function handleSubmit(e) {
@@ -183,7 +204,10 @@ export default function QRCodeUpdate() {
         <div className={styles.qrcodeResultContent}>
           <h2 className={styles.title}>Pedido substituido no QRCode</h2>
 
-          <img src={src} alt="QRCode" className={styles.image} />
+          <div className="qrcodeContent" id="qrcodeimg">
+            <img src={src} alt="QRCode" className={styles.image} />
+            <p className={styles.description}><span>{codeNumber}</span></p>
+          </div>
 
           <p className={styles.description}>Novo número do pedido substituido: <span>{randomOrderNumber}</span></p>
 
@@ -196,8 +220,8 @@ export default function QRCodeUpdate() {
               </a>
             </Link>
 
-            <a title="qrcodedownload" href={src} download>
-              <button className={`${styles.button} ${styles.buttonLast}`}>
+            <a title="qrcodedownload">
+              <button className={`${styles.button} ${styles.buttonLast}`} onClick={download}>
                 Download do QRCode
               </button>
             </a>

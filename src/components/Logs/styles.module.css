@@ -1,7 +1,88 @@
-.content {
-  flex-grow: 1;
-  padding: .5em;
+.warning {
+  font-size: 1.5em;
+}
+
+.emphasisBlue {
+  color: #2D9BF0;
+}
+
+.emphasisDarkGrey {
+  color: #2e2c2c;;
+}
+
+.emphasisDarkGrey {
+  color: #444242;;
+}
+
+.logContent {
+  margin-top: 1em;
+}
+
+.logItem {
+  margin: 2em 0;
+  padding: 1.5em;
+  text-align: start;
+  border-radius: 2em;
+  -webkit-box-shadow: 5px 5px 15px 5px rgba(168,168,168,0.62); 
+  box-shadow: 5px 5px 15px 5px rgba(168,168,168,0.62);  
+}
+
+.logHeader {
+  margin-bottom: .5em;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 1.5em;
+  font-weight: 500;
+  color: #444242;
+}
+
+.subTitle {
+  margin-top: 1em;
+  font-size: 1.2em;
+  font-weight: 500;
+  color: #444242;
+}
+
+.logHeaderDescription {
+  margin-left: 1em;
+  color: #444242;
+}
+
+.logDescription {
+  margin: 1em 0;
+}
+
+.description {
+  font-weight: 500;
+  color: #444242;
+}
+
+.contentToggleUpdateList {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.button {
+  padding: .8em;
+  border: 1px solid #2D9BF0;
+  background-color: #2D9BF0;
+  color: #fff;
+  align-self: center;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+.updateListItem {
+  margin: 1em 0;
+  padding: .5em;
+  border: 2px solid #2D9BF0;
+  border-radius: .5em;
 }
