@@ -202,7 +202,7 @@ export async function getLogs() {
           ordersUpdateList: arr[index]?.ordersUpdateList ? arr[index]?.ordersUpdateList : null, 
         }
         
-        ordersList.push(order);
+        ordersList.unshift(order);
       }
     }
 

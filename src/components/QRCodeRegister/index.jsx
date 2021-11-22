@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react';
 import { FaCamera } from "react-icons/fa";
 import { register } from '../../services/helpers';
+import html2canvas from 'html2canvas';
 const QrReader = dynamic(() => import('react-qr-reader'), {
   ssr: false
 })
@@ -29,6 +30,26 @@ export default function QRCodeRegister() {
     marginBottom: '6em'
   }
 
+  function download() {
+    setIsLoading(true);
+
+    const content = document.getElementById("qrcodeimg");
+
+    if (!content) {
+      setImageNotExist(true);
+      return;
+    }
+
+    html2canvas(content).then(canvas => {
+      const link = document.createElement('a')
+      link.download = `${codeNumber}.png`
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+
+    setIsLoading(false);
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -40,7 +61,7 @@ export default function QRCodeRegister() {
 
     await register(obj, setStatus, setSrc, setRandomOrderNumber, setCodeNumber);
     setIsLoading(false);
-    
+
     return false;
   }
 
@@ -55,72 +76,75 @@ export default function QRCodeRegister() {
 
   return (
     <div className={styles.container}>
-        <div className={styles.formContent}>
-          <h1 className={styles.mainTitle}>Associar Pedido</h1>
-          {
-            !isReading &&
-            <>
-              <label className={styles.label}>Insira o número do QRCode ou da URL gerada ou faça a leitura do QRCode</label>
-              <input 
-                className={styles.input} 
-                onChange={(e) => setQrCodeValue(e.target.value)}
-                type="text" 
-                placeholder="Número do QRCode ou URL" id="QRNumber" 
-                value={qrCodeValue ? qrCodeValue : undefined }
-                required 
-              />
-            </>
-          }
-
-          {
-            isReading &&
-            <QrReader
-              style={previewStyle}
-              onError={(error) => {
-                alert("Ocorreu um problema durante a leitura QRCode");
-                setIsReading(false);
-              }}
-              onScan={handleScan}
+      <div className={styles.formContent}>
+        <h1 className={styles.mainTitle}>Associar Pedido</h1>
+        {
+          !isReading &&
+          <>
+            <label className={styles.label}>Insira o número do QRCode ou da URL gerada ou faça a leitura do QRCode</label>
+            <input
+              className={styles.input}
+              onChange={(e) => setQrCodeValue(e.target.value)}
+              type="text"
+              placeholder="Número do QRCode ou URL" id="QRNumber"
+              value={qrCodeValue ? qrCodeValue : undefined}
+              required
             />
-          }
+          </>
+        }
 
-          <button onClick={() => setIsReading(!isReading)} className={`${styles.button} ${styles.qrcodeReaderButton}`}>
-            <FaCamera size={'1.5em'} />
-            <span>Clique aqui pra {isReading ? "encerrar a leitura" : "ler o QRCode"}</span>
-          </button>
+        {
+          isReading &&
+          <QrReader
+            style={previewStyle}
+            onError={(error) => {
+              alert("Ocorreu um problema durante a leitura QRCode");
+              setIsReading(false);
+            }}
+            onScan={handleScan}
+          />
+        }
 
-          {
-            !isReading &&
-            <>
-              <label className={styles.label} style={{ marginTop: '2em' }}>Insira o novo número do pedido</label>
-              <input 
-                className={styles.input} type="text" 
-                placeholder="Número novo do pedido" id="newOrderNumber"
-                onChange={(e) => setOrderNumber(e.target.value)}
-                required 
-              />
+        <button onClick={() => setIsReading(!isReading)} className={`${styles.button} ${styles.qrcodeReaderButton}`}>
+          <FaCamera size={'1.5em'} />
+          <span>Clique aqui pra {isReading ? "encerrar a leitura" : "ler o QRCode"}</span>
+        </button>
 
-              <button className={styles.button} onClick={handleSubmit}>Registrar novo pedido</button>
-            </>
-          }
+        {
+          !isReading &&
+          <>
+            <label className={styles.label} style={{ marginTop: '2em' }}>Insira o novo número do pedido</label>
+            <input
+              className={styles.input} type="text"
+              placeholder="Número novo do pedido" id="newOrderNumber"
+              onChange={(e) => setOrderNumber(e.target.value)}
+              required
+            />
 
-          {
-            status.isThereError &&
-            <p className={styles.warning}>{status.description}</p>
-          }
+            <button className={styles.button} onClick={handleSubmit}>Registrar novo pedido</button>
+          </>
+        }
 
-          {
-            status.wasSucess &&
-            <p className={styles.sucess}>{status.description}</p>
-          }
-        </div>
-        
+        {
+          status.isThereError &&
+          <p className={styles.warning}>{status.description}</p>
+        }
+
+        {
+          status.wasSucess &&
+          <p className={styles.sucess}>{status.description}</p>
+        }
+      </div>
+
       {
         randomOrderNumber &&
         <div className={styles.qrcodeResultContent}>
           <h1 className={styles.title} >Pedido associado no QRCode</h1>
 
-          <img src={src} alt="QRCode" className={styles.image} />
+          <div className="qrcodeContent" id="qrcodeimg">
+            <img src={src} alt="QRCode" className={styles.image} />
+            <p className={styles.description}><span>{codeNumber}</span></p>
+          </div>
 
           <p className={styles.description}>Novo número de pedido associado: <span>{randomOrderNumber}</span></p>
 
@@ -133,8 +157,8 @@ export default function QRCodeRegister() {
               </a>
             </Link>
 
-            <a title="qrcodedownload" href={src} download>
-              <button className={`${styles.button} ${styles.buttonLast}`}>
+            <a title="qrcodedownload">
+              <button className={`${styles.button} ${styles.buttonLast}`} onClick={download}>
                 Download do QRCode
               </button>
             </a>
