@@ -5,6 +5,8 @@ import Loader from '../Loader';
 import moment from "moment-timezone";
 import { useState } from 'react';
 import html2canvas from 'html2canvas';
+import QRCodeVetor from 'qrcode-svg';
+import svgToDataURL from 'svg-to-dataurl';
 
 export default function QRCodeGenerator() {
   const [randomOrderNumber, setRandomOrderNumber] = useState(null);
@@ -13,11 +15,11 @@ export default function QRCodeGenerator() {
 
   const resultClass = [styles.container];
 
-  function download() {
+  async function download() {
     setIsLoading(true);
 
     const content = document.getElementById("qrcodeimg");
-    
+
     if (!content) {
       setImageNotExist(true);
       return;
@@ -26,14 +28,16 @@ export default function QRCodeGenerator() {
     html2canvas(content).then(canvas => {
       const link = document.createElement('a')
       link.download = `${randomOrderNumber}.png`
-      link.href = canvas.toDataURL("image/png");
+      link.href = canvas.toDataURL();
       link.click();
     });
 
     setIsLoading(false);
   }
 
+
   async function getRandomNumber() {
+
     setIsLoading(true);
 
     const verificationResult = await fetch(`/api/generate-qrcode-number`, {
@@ -47,23 +51,24 @@ export default function QRCodeGenerator() {
       const url = `${process.env.URL}/order/${codeNumber}`;
       const currentDate = moment().tz("America/Sao_Paulo").format('DD/MM/YYYY HH:mm:ss');
 
-      QRCode.toDataURL(url, { width: 400 }).then(async (data) => {
-        const registerResult = await fetch(`/api/insert-qrcode`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            codeNumber: codeNumber,
-            originalQRCode: data,
-            originalURL: url,
-            createdAt: currentDate
-          })
-        })
-          .then(res => res.json());
-        setSrcQRCode(data);
-      });
+      const svgImage = new QRCodeVetor(url).svg();
+      const dataUrl = svgToDataURL(svgImage);
 
+      const registerResult = await fetch(`/api/insert-qrcode`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          codeNumber: codeNumber,
+          originalQRCode: dataUrl,
+          originalURL: url,
+          createdAt: currentDate
+        })
+      })
+        .then(res => res.json());
+
+      setSrcQRCode(dataUrl);
       setRandomOrderNumber(codeNumber);
 
       setTimeout(() => {
@@ -79,6 +84,7 @@ export default function QRCodeGenerator() {
     <div className={resultClass.join(' ')}>
       <h1 className={styles.title}>Clique no botão abaixo para gerar um QRCode aleatório com um novo número de pedido</h1>
       <button onClick={getRandomNumber} className={styles.button}>Gerar QRCode {randomOrderNumber && 'novamente'}</button>
+
 
       {
         randomOrderNumber &&
@@ -99,8 +105,8 @@ export default function QRCodeGenerator() {
               </a>
             </Link>
 
-            <a title="qrcodedownload" id="donwloadButton">
-              <button className={`${styles.button} ${styles.buttonLast}`} onClick={download}>
+            <a title="qrcodedownload" id="donwloadButton" href={srcQRCode} download>
+              <button className={`${styles.button} ${styles.buttonLast}`}>
                 Download do QRCode
               </button>
             </a>
