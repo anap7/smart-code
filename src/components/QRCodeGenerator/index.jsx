@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import styles from './styles.module.css';
-import QRCode from 'qrcode';
 import Loader from '../Loader';
 import moment from "moment-timezone";
 import { useState } from 'react';
@@ -84,7 +83,6 @@ export default function QRCodeGenerator() {
     <div className={resultClass.join(' ')}>
       <h1 className={styles.title}>Clique no botão abaixo para gerar um QRCode aleatório com um novo número de pedido</h1>
       <button onClick={getRandomNumber} className={styles.button}>Gerar QRCode {randomOrderNumber && 'novamente'}</button>
-
 
       {
         randomOrderNumber &&
