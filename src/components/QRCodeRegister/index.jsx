@@ -157,8 +157,8 @@ export default function QRCodeRegister() {
               </a>
             </Link>
 
-            <a title="qrcodedownload">
-              <button className={`${styles.button} ${styles.buttonLast}`} onClick={download}>
+            <a title="qrcodedownload" href={src} download>
+              <button className={`${styles.button} ${styles.buttonLast}`}>
                 Download do QRCode
               </button>
             </a>
