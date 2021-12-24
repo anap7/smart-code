@@ -30,7 +30,7 @@ export default function QRCodeRegister() {
   }
 
   async function downloadToPDF() {
-    const files = await fetch(`http://pdf-nice-generator.herokuapp.com/generate-pdf?codeNumber=${codeNumber}`, {
+    const files = await fetch(`https://pdf-nice-generator.herokuapp.com/generate-pdf?codeNumber=${codeNumber}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
