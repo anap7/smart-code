@@ -1,0 +1,41 @@
+.menu {
+  padding: 1em 3em;
+  background-color: rgb(238,234,225);
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.clientName {
+  font-weight: 400;
+  font-size: 1.3em;
+  color: rgb(62, 75,20);
+}
+
+.companyContent {
+  border: 1px solid rgb(177, 167, 150);
+  border-radius: .5em;
+  padding: .1em 1em;
+}
+
+.companyContent p{
+  font-size: 1em;
+}
+
+.companyTitle {
+  font-weight: bold;
+  color:rgb(65, 75, 20);
+}
+
+.companyDescription {
+  color:rgb(61, 75, 20);
+}
+
+@media (max-width: 600px)
+{
+  .companyContent {
+    margin-top: 1em;
+  }
+} 

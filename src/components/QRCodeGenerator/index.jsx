@@ -3,40 +3,31 @@ import styles from './styles.module.css';
 import Loader from '../Loader';
 import moment from "moment-timezone";
 import { useState } from 'react';
-import html2canvas from 'html2canvas';
-import QRCodeVetor from 'qrcode-svg';
 import svgToDataURL from 'svg-to-dataurl';
 
 export default function QRCodeGenerator() {
   const [randomOrderNumber, setRandomOrderNumber] = useState(null);
   const [srcQRCode, setSrcQRCode] = useState('');
+  const [srcPDF, setSrcPDF] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const resultClass = [styles.container];
 
-  async function download() {
-    setIsLoading(true);
-
-    const content = document.getElementById("qrcodeimg");
-
-    if (!content) {
-      setImageNotExist(true);
-      return;
-    }
-
-    html2canvas(content).then(canvas => {
-      const link = document.createElement('a')
-      link.download = `${randomOrderNumber}.png`
-      link.href = canvas.toDataURL();
-      link.click();
-    });
-
-    setIsLoading(false);
+  function downloadSVG() {
+    const link2 = document.createElement('a');
+    link2.download = `${randomOrderNumber}.svg`;
+    link2.href = srcQRCode;
+    link2.click();
   }
 
+ function downloadPDF() {
+    const link = document.createElement('a');
+    link.download = `${randomOrderNumber}.pdf`;
+    link.href = srcPDF;
+    link.click();
+  }
 
   async function getRandomNumber() {
-
     setIsLoading(true);
 
     const verificationResult = await fetch(`/api/generate-qrcode-number`, {
@@ -45,12 +36,29 @@ export default function QRCodeGenerator() {
     })
       .then(res => res.json());
 
-    if (verificationResult?.codeNumber) {
+   if (verificationResult?.codeNumber) {
       const codeNumber = verificationResult?.codeNumber;
       const url = `${process.env.URL}/order/${codeNumber}`;
       const currentDate = moment().tz("America/Sao_Paulo").format('DD/MM/YYYY HH:mm:ss');
 
-      const svgImage = new QRCodeVetor(url).svg();
+      const files = await fetch(`http://pdf-nice-generator.herokuapp.com/generate-pdf?codeNumber=${codeNumber}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }
+      })
+        .then(res => res.json())
+        .catch(err => console.error(err));
+
+      if(!files.svg || !files.pdf) {
+        setIsLoading(false);
+        alert("Ocorreu um problema durante a geração do QRCode, por favor, tente novamente");
+        return
+      }
+  
+      const svgImage = files.svg;
+      const pdf = files.pdf;
       const dataUrl = svgToDataURL(svgImage);
 
       const registerResult = await fetch(`/api/insert-qrcode`, {
@@ -62,12 +70,15 @@ export default function QRCodeGenerator() {
           codeNumber: codeNumber,
           originalQRCode: dataUrl,
           originalURL: url,
-          createdAt: currentDate
+          createdAt: currentDate,
+          pdfFile: pdf,
+          svgFile: svgImage
         })
       })
         .then(res => res.json());
 
       setSrcQRCode(dataUrl);
+      setSrcPDF(pdf);
       setRandomOrderNumber(codeNumber);
 
       setTimeout(() => {
@@ -103,9 +114,9 @@ export default function QRCodeGenerator() {
               </a>
             </Link>
 
-            <a title="qrcodedownload" id="donwloadButton" href={srcQRCode} download>
+            <a title="qrcodedownload" id="donwloadButton" onClick={downloadPDF}>
               <button className={`${styles.button} ${styles.buttonLast}`}>
-                Download do QRCode
+                Download do PDF
               </button>
             </a>
           </div>

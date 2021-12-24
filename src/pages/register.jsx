@@ -1,6 +1,10 @@
 import QRCodeRegister from "../components/QRCodeRegister";
+import Menu from '../components/Menu'
 
 export default function Page() {
-  return <QRCodeRegister />
-
+  return (
+    <Menu>
+      <QRCodeRegister />
+    </Menu>
+  )
 }

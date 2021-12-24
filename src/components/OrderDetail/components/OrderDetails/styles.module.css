@@ -1,0 +1,91 @@
+.detailsStatusContent {
+  background-color: rgb(254, 252, 249);
+  padding-bottom: 2em;
+  margin-bottom: 3em;
+}
+
+.detailsStatusHeader {
+  background-color: rgb(246, 243, 238);
+  padding: .5em 2em;
+}
+
+.detailsStatusHeader p {
+  color: rgb(61, 75, 20);
+}
+
+.statusTitle {
+  font-size: 2em;
+  font-weight: 500;
+}
+
+.ordersDetailsMainTitleContent {
+  background-color: rgb(246, 243, 238);
+  border-top: 1px solid rgb(171, 160, 143);
+  border-right: 1px solid rgb(171, 160, 143);
+  border-left: 1px solid rgb(171, 160, 143);
+  width: 600px;
+  margin: 3em auto 0 auto;
+  padding: 1em 2em;
+}
+
+.ordersDetailsMainTitle {
+  color: rgb(61, 75, 20);
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+.ordersDetails {
+  background-color: rgb(246, 243, 238);
+  border: 1px solid rgb(171, 160, 143);
+  width: 600px;
+  margin: 0 auto;
+  padding: 1em 2em;
+}
+
+.ordersDetailsItem {
+  font-size: 1.3em;
+  color: rgb(62, 62, 62);
+  padding: .8em 0;
+  border-bottom: 1px solid rgb(171, 160, 143);
+}
+
+.ordersDetailsItem span{
+  font-weight: bold;
+  margin-left: .5em;
+}
+
+@media (max-width: 621px)
+{
+  .ordersDetailsItem {
+    width: 550px;
+  }
+} 
+
+@media (max-width: 512px)
+{
+  .ordersDetailsItem {
+    width: 450px;
+  }
+} 
+
+@media (max-width: 472px)
+{
+  .ordersDetailsItem {
+    width: 300px;
+  }
+} 
+
+@media (max-width: 392px)
+{
+  .statusTitle {
+    font-size: 1.3em;
+  }
+} 
+
+@media (max-width: 346px)
+{
+  .statusTitle {
+    width: 300px;
+  }
+} 
+
