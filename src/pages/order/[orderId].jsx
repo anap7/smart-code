@@ -7,7 +7,7 @@ function Page({ codeNumber, orderNumber, qrcode }) {
 }
 
 export async function getServerSideProps(context) {
-  const codeNumber = context.params.orderId;
+  /*const codeNumber = context.params.orderId;
 
   const result = await fetch(`${process.env.URL}/api/get-order`, {
     method: 'POST',
@@ -23,6 +23,15 @@ export async function getServerSideProps(context) {
       codeNumber,
       orderNumber: result?.searchResult ? result?.searchResult?.orderNumber : null,
       qrcode: result?.searchResult ? result?.searchResult?.qrcode : null
+    }
+  }*/
+  const codeNumber = context.params.orderId;
+
+  return {
+    props: {
+      codeNumber: codeNumber ? codeNumber : null,
+      orderNumber: '687320301',
+      qrcode: ''
     }
   }
 }

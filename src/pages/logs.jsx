@@ -1,7 +1,12 @@
 import Logs from '../components/Logs';
+import Menu from '../components/Menu';
 
 export default function Page({ logList }) {
-  return <Logs logList={logList} />
+  return (
+    <Menu>
+      <Logs logList={logList} />
+    </Menu>
+  )
 }
 
 export async function getServerSideProps(context) {

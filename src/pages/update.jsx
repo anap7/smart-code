@@ -1,5 +1,10 @@
 import QRCodeUpdate from "../components/QRCodeUpdate";
+import Menu from '../components/Menu';
 
 export default function Page() {
-  return <QRCodeUpdate />
+  return (
+    <Menu>
+      <QRCodeUpdate />
+    </Menu>
+  )
 }

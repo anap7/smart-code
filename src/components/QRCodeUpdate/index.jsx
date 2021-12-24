@@ -5,7 +5,6 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic'
 import { update, findOrder } from '../../services/helpers';
 import { FaCamera } from "react-icons/fa";
-import html2canvas from 'html2canvas';
 const QrReader = dynamic(() => import('react-qr-reader'), {
   ssr: false
 })
@@ -35,24 +34,27 @@ export default function QRCodeUpdate() {
     marginBottom: '6em'
   }
 
-  function download() {
-    setIsLoading(true);
+  async function downloadToPDF() {
+    const files = await fetch(`http://pdf-nice-generator.herokuapp.com/generate-pdf?codeNumber=${codeNumber}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
+    })
+      .then(res => res.json())
+      .catch(err => console.error(err));
 
-    const content = document.getElementById("qrcodeimg");
-
-    if (!content) {
-      setImageNotExist(true);
-      return;
+    if (!files.svg || !files.pdf) {
+      alert("Ocorreu um problema durante a geração do QRCode, por favor, tente novamente");
+      return
     }
 
-    html2canvas(content).then(canvas => {
-      const link = document.createElement('a')
-      link.download = `${codeNumber}.png`
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    });
-
-    setIsLoading(false);
+    const link = document.createElement('a');
+    const pdf = files.pdf;
+    link.download = `${codeNumber}.pdf`;
+    link.href = pdf;
+    link.click();
   }
 
   async function handleSubmit(e) {
@@ -220,7 +222,7 @@ export default function QRCodeUpdate() {
               </a>
             </Link>
 
-            <a title="qrcodedownload" href={src} download>
+            <a title="qrcodedownload" onClick={downloadToPDF}>
               <button className={`${styles.button} ${styles.buttonLast}`}>
                 Download do QRCode
               </button>
