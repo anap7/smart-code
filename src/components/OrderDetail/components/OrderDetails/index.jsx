@@ -10,7 +10,7 @@ export default function OrderDetails() {
         <p className={styles.ordersDetailsMainTitle}>DADOS DO PEDIDO</p>
       </div>
       <div className={styles.ordersDetails}>
-        <p className={styles.ordersDetailsItem}>Pedido: <span>687320301</span></p>
+        <p className={styles.ordersDetailsItem}>Pedido: <span>693243603</span></p>
         <p className={styles.ordersDetailsItem}>Referência do cliente: <span>1501285 / V03 - Cx de Cartelas - Unid Tozin</span></p>
         <p className={styles.ordersDetailsItem}>Pedido do cliente: <span>4500222820</span></p>
         <p className={styles.ordersDetailsItem}>Item: <span>20</span></p>
