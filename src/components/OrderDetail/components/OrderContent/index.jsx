@@ -8,7 +8,7 @@ export default function orderContent() {
           <div>
             <div>
               <span className={styles.orderDescriptionTitle}>Número do pedido</span>
-              <p className={styles.numberMark}>687320301</p>
+              <p className={styles.numberMark}>693243603</p>
             </div>
           </div>
           <div>

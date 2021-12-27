@@ -30,7 +30,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       codeNumber: codeNumber ? codeNumber : null,
-      orderNumber: '687320301',
+      orderNumber: '693243603',
       qrcode: ''
     }
   }
