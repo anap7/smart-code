@@ -14,7 +14,7 @@ export default function OrderDetails() {
         <p className={styles.ordersDetailsItem}>Referência do cliente: <span>1501285 / V03 - Cx de Cartelas - Unid Tozin</span></p>
         <p className={styles.ordersDetailsItem}>Pedido do cliente: <span>4500222820</span></p>
         <p className={styles.ordersDetailsItem}>Item: <span>20</span></p>
-        <p className={styles.ordersDetailsItem}>Status: <span>A Programar</span></p>
+        <p className={styles.ordersDetailsItem}>Status: <span>Entregue</span></p>
         <p className={styles.ordersDetailsItem}>Qtde.: <span>10.000</span></p>
         <p className={styles.ordersDetailsItem}>Saldo: <span>10.000</span></p>
         <p className={styles.ordersDetailsItem}>Qtd. Pallet Pedido: <span>8</span></p>

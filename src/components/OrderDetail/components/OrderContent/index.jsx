@@ -15,7 +15,7 @@ export default function orderContent() {
             <span className={styles.orderDescriptionTitle}>Número do QRCode</span>
             <p className={styles.numberMark}>QR420726</p>
           </div>
-          <button className={styles.button}>A PROGRAMAR</button>
+          <button className={styles.button}>ENTREGUE</button>
         </section>
     </>
   )

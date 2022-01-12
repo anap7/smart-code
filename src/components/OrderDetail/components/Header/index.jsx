@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <header className={styles.menu}>
       <div className={styles.logo}>
-        <img src="../../assets/logo.jpg" alt="aqui" width={100} />
+        <img src="/logo.jpg" alt="aqui" width={100} />
         <span className={styles.clientName}>| Dori</span>
       </div>
 
