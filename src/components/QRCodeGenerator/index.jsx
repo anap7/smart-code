@@ -102,7 +102,7 @@ export default function QRCodeGenerator() {
 
           <div className="qrcodeContent" id="qrcodeimg">
             <img src={srcQRCode} alt="QRCode" className={styles.image} />
-            <p className={styles.description}><span>{randomOrderNumber}</span></p>
+            <p className={styles.descriptionNumber}><span>{randomOrderNumber}</span></p>
           </div>
 
           <div className={styles.buttonContent}>
@@ -117,6 +117,12 @@ export default function QRCodeGenerator() {
             <a title="qrcodedownload" id="donwloadButton" onClick={downloadPDF}>
               <button className={`${styles.button} ${styles.buttonLast}`}>
                 Download do PDF
+              </button>
+            </a>
+
+            <a onClick={() => window.print()}>
+              <button className={`${styles.button} ${styles.buttonLast}`}>
+                Gerar PDF
               </button>
             </a>
           </div>

@@ -19,11 +19,11 @@
   height: 250px 
 }
 
-.description {
+.description, .descriptionNumber {
   font-size: 1.2em;
   font-weight: 500;
   margin-bottom: 1em;
-  color: #444242;
+  color: #000;
   text-align: center;
 }
 
@@ -70,4 +70,10 @@
    .description {
     font-size: 1em;
    }
+}
+
+@media print {
+  .title, .button, .description, .buttonContent, .description{ 
+    display: none;
+  }
 }
