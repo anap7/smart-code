@@ -29,29 +29,6 @@ export default function QRCodeRegister() {
     marginBottom: '6em'
   }
 
-  async function downloadToPDF() {
-    const files = await fetch(`https://pdf-nice-generator.herokuapp.com/generate-pdf?codeNumber=${codeNumber}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      }
-    })
-      .then(res => res.json())
-      .catch(err => console.error(err));
-
-    if (!files.svg || !files.pdf) {
-      alert("Ocorreu um problema durante a geração do QRCode, por favor, tente novamente");
-      return
-    }
-
-    const link = document.createElement('a');
-    const pdf = files.pdf;
-    link.download = `${codeNumber}.pdf`;
-    link.href = pdf;
-    link.click();
-  }
-
   async function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -145,7 +122,7 @@ export default function QRCodeRegister() {
 
           <div className="qrcodeContent" id="qrcodeimg">
             <img src={src} alt="QRCode" className={styles.image} />
-            <p className={styles.description}><span>{codeNumber}</span></p>
+            <p className={styles.descriptionNumber}><span>{codeNumber}</span></p>
           </div>
 
           <p className={styles.description}>Novo número de pedido associado: <span>{randomOrderNumber}</span></p>
@@ -159,9 +136,9 @@ export default function QRCodeRegister() {
               </a>
             </Link>
 
-            <a title="qrcodedownload" onClick={downloadToPDF}>
+            <a onClick={() => window.print()}>
               <button className={`${styles.button} ${styles.buttonLast}`}>
-                Download do QRCode
+                Gerar PDF
               </button>
             </a>
           </div>

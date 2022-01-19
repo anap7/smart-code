@@ -110,11 +110,11 @@
   text-align: center;
 }
 
-.description {
+.description, .descriptionNumber {
   font-size: 1.1em;
   font-weight: 500;
   margin-bottom: 1em;
-  color: #444242;
+  color: #000;
 }
 
 .description span {
@@ -170,3 +170,9 @@
     padding-left: .5em;
   }
 } 
+
+@media print {
+  .title, .button, .description, .buttonContent, .description, .formContent{ 
+    display: none;
+  }
+}
