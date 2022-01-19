@@ -8,24 +8,9 @@ import svgToDataURL from 'svg-to-dataurl';
 export default function QRCodeGenerator() {
   const [randomOrderNumber, setRandomOrderNumber] = useState(null);
   const [srcQRCode, setSrcQRCode] = useState('');
-  const [srcPDF, setSrcPDF] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const resultClass = [styles.container];
-
-  function downloadSVG() {
-    const link2 = document.createElement('a');
-    link2.download = `${randomOrderNumber}.svg`;
-    link2.href = srcQRCode;
-    link2.click();
-  }
-
- function downloadPDF() {
-    const link = document.createElement('a');
-    link.download = `${randomOrderNumber}.pdf`;
-    link.href = srcPDF;
-    link.click();
-  }
 
   async function getRandomNumber() {
     setIsLoading(true);
@@ -78,7 +63,6 @@ export default function QRCodeGenerator() {
         .then(res => res.json());
 
       setSrcQRCode(dataUrl);
-      setSrcPDF(pdf);
       setRandomOrderNumber(codeNumber);
 
       setTimeout(() => {
@@ -102,7 +86,7 @@ export default function QRCodeGenerator() {
 
           <div className="qrcodeContent" id="qrcodeimg">
             <img src={srcQRCode} alt="QRCode" className={styles.image} />
-            <p className={styles.description}><span>{randomOrderNumber}</span></p>
+            <p className={styles.descriptionNumber}><span>{randomOrderNumber}</span></p>
           </div>
 
           <div className={styles.buttonContent}>
@@ -114,9 +98,9 @@ export default function QRCodeGenerator() {
               </a>
             </Link>
 
-            <a title="qrcodedownload" id="donwloadButton" onClick={downloadPDF}>
+            <a onClick={() => window.print()}>
               <button className={`${styles.button} ${styles.buttonLast}`}>
-                Download do PDF
+                Gerar PDF
               </button>
             </a>
           </div>
