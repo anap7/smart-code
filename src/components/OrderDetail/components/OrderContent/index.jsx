@@ -8,12 +8,12 @@ export default function orderContent() {
           <div>
             <div>
               <span className={styles.orderDescriptionTitle}>Número do pedido</span>
-              <p className={styles.numberMark}>693243603</p>
+              <p className={styles.numberMark}>00000000000000000</p>
             </div>
           </div>
           <div>
             <span className={styles.orderDescriptionTitle}>Número do QRCode</span>
-            <p className={styles.numberMark}>QR420726</p>
+            <p className={styles.numberMark}>Q0000000000</p>
           </div>
           <button className={styles.button}>ENTREGUE</button>
         </section>

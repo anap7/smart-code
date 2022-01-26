@@ -4,13 +4,13 @@ export default function Header() {
   return (
     <header className={styles.menu}>
       <div className={styles.logo}>
-        <img src="/logo.jpg" alt="aqui" width={85} />
-        <span className={styles.clientName}>| Dori</span>
+        <img src="/logo.png" alt="aqui" width={85} />
+        <span className={styles.clientName}>| Empresa random</span>
       </div>
 
       <div className={styles.companyContent}>
-        <p className={styles.companyTitle}>Dori</p>
-        <p className={styles.companyDescription}>CNPJ: 12.345.678/0001-00</p>
+        <p className={styles.companyTitle}>Empresa random</p>
+        <p className={styles.companyDescription}>CNPJ: 00.000.000/0000-00</p>
       </div>
     </header>
   )
