@@ -19,8 +19,3 @@
 
 ## Deploy da aplicação no Heroku 
     git push heroku master
-
-
-## Quem participou? :busts_in_silhouette:
-
-* **Ana Flávia Pesseti** - *DB São Paulo* - [Email](mailto:ana.pesseti@dbserver.com.br)

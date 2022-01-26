@@ -11,7 +11,7 @@ export default function OrderDetail({ codeNumber, orderNumber = null, qrcode = n
     <>
       <Header />
       {
-        codeNumber === "QR420726" ?
+        codeNumber ?
           <>
             <main className={styles.container}>
               <OrderContent />
