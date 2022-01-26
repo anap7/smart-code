@@ -7,7 +7,7 @@ export default function DownloadContent() {
     <section className={styles.downloadContent}>
       <div className={styles.nfContent}>
         <span className={styles.title}>Nota Fiscal: </span>
-        <a title="nfDownload" href='/certifQA.pdf' download>
+        <a title="nfDownload" href='#' download>
           <button className={`${styles.downloadButton} ${styles.nfButton}`}>
             <FaDownload />
             <span style={{ marginLeft: '.5em' }}>PDF</span>
@@ -16,7 +16,7 @@ export default function DownloadContent() {
       </div>
       <div className={styles.certicationContent}>
         <span className={styles.title}>Certificado de Qualidade: </span>
-        <a title="certiDownload" href='/certifQA.pdf' download>
+        <a title="certiDownload" href='#' download>
           <button className={styles.downloadButton}>
             <FaDownload />
             <span style={{ marginLeft: '.5em' }}>PDF</span>
